@@ -5,15 +5,32 @@ Subscribe to twitter/instagram hashtags, verify users, put them on a map
 
  - [Djangular](https://github.com/TrackMaven/Djangular.git)
  
- ## Checklist
+## API Keys
+
+### Twitter
+
+Go here: [https://apps.twitter.com/app/new](https://apps.twitter.com/app/new)
+
+Sign up for an app, get the keys (client id and secret)
+
+### Instagram
+
+Go here: [https://instagram.com/developer/clients/register/](https://instagram.com/developer/clients/register/)
+
+Register, clone [python-instagram](https://github.com/Instagram/python-instagram)
+
+Run `python get_access_token.py`, follow the directions, copy the access_token.  You'll need the access_token and client_secret
+
+## Checklist
  
  - [x] Add checklist to readme, remove old stuff
  - [x] Change requirements (Django 1.7.1, add celery, add python-oauth2, add python-instagram)
  - [x] pip install -r requirements.txt
  - [x] npm install
  - [x] setup models (api keys, tweet model, instagram model, tag model, team models (team, van, user))
- - [ ] Integrate celery
- - [ ] Update readme with instructions for getting API keys
+ - [x] Install Redis `brew install redis` & `redis-server`
+ - [x] Integrate celery
+ - [x] Update readme with instructions for getting API keys
  - [ ] Add twitter and instagram tasks into celery
  - [ ] Have celery check twitter/instagram at x-frequency
  - [ ] Check if tweets/instagrams are from known people
