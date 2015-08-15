@@ -47,10 +47,10 @@ For some reason the controller wouldn't resolve tweets when in the stateProvider
  - [x] Setup endpoint to retrieve tweets (unverified, verified, combined, has location)
  - [x] Calculate Stats
  - [x] Setup endpoint to retrieve stats
- - [ ] Setup master endpoint with all info
- - [ ] Move to front end...
+ - [x] Move to front end...
  - [x] List Tweets (raw)
- - [ ] List Stats (raw)
+ - [x] List Stats (raw)
+ - [ ] General Layout
  - [ ] Highlight verified (team member) tweets
  - [ ] Highlight most recent tweets
  - [ ] “Style” tweets
@@ -67,5 +67,6 @@ For some reason the controller wouldn't resolve tweets when in the stateProvider
  - [ ] Setup endpoint to retrieve combined tweets and instas
  - [ ] List Pics (raw)
  - [ ] Highlight verified (team member) instas
+ - [ ] Setup master endpoint with all info
  - [ ] Have celery check twitter at x-frequency
  - [ ] Fix resolve issue in stateProvider

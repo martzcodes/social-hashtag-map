@@ -14,10 +14,22 @@ Tweets
         <li ng-repeat="tweet in tweets">[[tweet.content]]</li>
     </ul>
     <hr />
-    <h3>Verified</h3>
-    <pre>[[verifiedtweets]]</pre>
+    <h3>Team Stats</h3>
+    <pre>[[teamstats]]</pre>
     <ul>
-        <li ng-repeat="tweet in verifiedtweets">[[tweet.content]]</li>
+        <li ng-repeat="stat in teamstats">[[stat.team_name]] ([[stat.van_name]]): [[stat.tweet_count]], [[stat.insta_count]]</li>
+    </ul>
+    <hr />
+    <h3>Member Stats</h3>
+    <pre>[[memberstats]]</pre>
+    <ul>
+        <li ng-repeat="stat in memberstats">[[stat.display_name]]: [[stat.tweet_count]], [[stat.insta_count]]</li>
+    </ul>
+    <hr />
+    <h3>Hashtag Stats</h3>
+    <pre>[[hashtagstats]]</pre>
+    <ul>
+        <li ng-repeat="stat in hashtagstats">[[stat.hashtag]]: [[stat.tweet_count]], [[stat.insta_count]], [[stat.verified_count]], [[stat.unverified_count]]</li>
     </ul>
 </div>
 

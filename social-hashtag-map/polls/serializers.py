@@ -21,3 +21,9 @@ class HashtagStatSerializer(serializers.ModelSerializer):
     class Meta:
         model = Hashtag
         fields = ('hashtag', 'tweet_count', 'insta_count', 'verified_count', 'unverified_count')
+
+# class StatSerializer(serializers.Serializer):
+#     pk = serializers.Field()
+#     title = serializers.CharField()
+#     author = serializers.RelatedField()
+#     pub_date = serializers.DateTimeField()

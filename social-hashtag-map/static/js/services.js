@@ -302,7 +302,7 @@
         var _this = this;
         return $http({
           method: 'GET',
-          url: '/polls/teams/stats'
+          url: '/polls/team/stats'
         }).success(function(data) {
           $log.info("Succesfully fetched teams.");
           return _this.fromServer(data);
@@ -336,7 +336,7 @@
         var _this = this;
         return $http({
           method: 'GET',
-          url: '/polls/members/stats'
+          url: '/polls/member/stats'
         }).success(function(data) {
           $log.info("Succesfully fetched members.");
           return _this.fromServer(data);
@@ -370,7 +370,7 @@
         var _this = this;
         return $http({
           method: 'GET',
-          url: '/polls/hashtags/stats'
+          url: '/polls/hashtag/stats'
         }).success(function(data) {
           $log.info("Succesfully fetched hashtags.");
           return _this.fromServer(data);

@@ -3,13 +3,15 @@
 
   controllers = angular.module('pollApp.controllers', []);
 
-  controllers.controller('tweetListController', function($scope, $state, $log, Tweets, VerifiedTweets) {
+  controllers.controller('tweetListController', function($scope, $state, $log, Tweets, TeamStats, MemberStats, HashtagStats) {
     Tweets.fetch();
-    VerifiedTweets.fetch();
+    TeamStats.fetch();
+    MemberStats.fetch();
+    HashtagStats.fetch();
     $scope.tweets = Tweets.data().all;
-    $scope.verifiedtweets = VerifiedTweets.data().all;
-    $log.info("Tweets", $scope.tweets);
-    return $log.info("Verified Tweets", $scope.verifiedtweets);
+    $scope.teamstats = TeamStats.data().all;
+    $scope.memberstats = MemberStats.data().all;
+    return $scope.hashtagstats = HashtagStats.data().all;
   });
 
 }).call(this);

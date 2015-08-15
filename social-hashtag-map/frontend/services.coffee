@@ -184,7 +184,7 @@ services.factory('TeamStats', ($log, $http, Team) ->
             teams['all'].push(new Team(team))
 
     fetch: ->
-        $http({method: 'GET', url: '/polls/teams/stats'})
+        $http({method: 'GET', url: '/polls/team/stats'})
             .success (data) =>
                 $log.info("Succesfully fetched teams.")
                 @fromServer(data)
@@ -206,7 +206,7 @@ services.factory('MemberStats', ($log, $http, Member) ->
             members['all'].push(new Member(member))
 
     fetch: ->
-        $http({method: 'GET', url: '/polls/members/stats'})
+        $http({method: 'GET', url: '/polls/member/stats'})
             .success (data) =>
                 $log.info("Succesfully fetched members.")
                 @fromServer(data)
@@ -228,7 +228,7 @@ services.factory('HashtagStats', ($log, $http, Hashtag) ->
             hashtags['all'].push(new Hashtag(hashtag))
 
     fetch: ->
-        $http({method: 'GET', url: '/polls/hashtags/stats'})
+        $http({method: 'GET', url: '/polls/hashtag/stats'})
             .success (data) =>
                 $log.info("Succesfully fetched hashtags.")
                 @fromServer(data)
