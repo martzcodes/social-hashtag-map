@@ -25,3 +25,26 @@ build/Release
 # Dependency directory
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
 node_modules
+
+.idea
+
+*.pyc
+*.pyo
+*~
+.DS_Store
+.env
+.vfenv
+.venv
+.Python
+.foreman
+.coverage
+*.floo
+*.sass-cache*
+*.vagrant*
+*.sublime-*
+*.sqlite3*
+*.sass-cache
+
+
+/node_modules
+npm-debug.log
