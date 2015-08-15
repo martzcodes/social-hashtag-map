@@ -11,7 +11,7 @@ Subscribe to twitter/instagram hashtags, verify users, put them on a map
  - [x] Change requirements (Django 1.7.1, add celery, add python-oauth2, add python-instagram)
  - [x] pip install -r requirements.txt
  - [x] npm install
- - [ ] setup models (api keys, tweet model, instagram model, tag model, team models (team, van, user))
+ - [x] setup models (api keys, tweet model, instagram model, tag model, team models (team, van, user))
  - [ ] Integrate celery
  - [ ] Update readme with instructions for getting API keys
  - [ ] Add twitter and instagram tasks into celery
