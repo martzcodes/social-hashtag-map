@@ -21,6 +21,10 @@ Register, clone [python-instagram](https://github.com/Instagram/python-instagram
 
 Run `python get_access_token.py`, follow the directions, copy the access_token.  You'll need the access_token and client_secret
 
+## Notes
+
+Ended up moving instagram to the bottom... didn't realize their api doesn't let you search for multiple tags at once, so I have to figure out how I want to do that...
+
 ## Checklist
  
  - [x] Add checklist to readme, remove old stuff
@@ -32,23 +36,29 @@ Run `python get_access_token.py`, follow the directions, copy the access_token. 
  - [x] Integrate celery
  - [x] Update readme with instructions for getting API keys
  - [x] Add twitter task into celery
- - [ ] Add instagram task into celery
  - [ ] Process twitter results
- - [ ] Process instagram results
- - [ ] Have celery check twitter/instagram at x-frequency
- - [ ] Check if tweets/instagrams are from known people
- - [ ] Store tweets/instagrams
- - [ ] Setup endpoint to retrieve tweets/instagrams (combined, separate, verified only, separate + verified)
+ - [ ] Have celery check twitter at x-frequency
+ - [ ] Check if tweets are from known people
+ - [ ] Store tweets
+ - [ ] Setup endpoint to retrieve tweets (separate, verified only, separate + verified)
  - [ ] Setup endpoint to retrieve stats
  - [ ] Setup master endpoint with all info
- - [ ] Move to front end
+ - [ ] Move to front end...
  - [ ] List Tweets (raw)
- - [ ] List Pics (raw)
  - [ ] List Stats (raw)
- - [ ] Highlight verified tweets/pics
- - [ ] Highlight most recent tweets/pics
+ - [ ] Highlight verified (team member) tweets
+ - [ ] Highlight most recent tweets
  - [ ] “Style” tweets
  - [ ] “Style” pics
  - [ ] “Style” Stats
  - [ ] Process out locations, put them on a map (mapbox?)
  - [ ] Style map
+ - [ ] Add instagram task into celery
+ - [ ] Process instagram results
+ - [ ] Have celery check instagram at x-frequency
+ - [ ] Check if instas are from known people
+ - [ ] Store instas
+ - [ ] Setup endpoint to retrieve instas (separate, verified only, separate + verified)
+ - [ ] Setup endpoint to retrieve combined tweets and instas
+ - [ ] List Pics (raw)
+ - [ ] Highlight verified (team member) instas
