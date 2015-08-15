@@ -37,8 +37,8 @@ Ended up moving instagram to the bottom... didn't realize their api doesn't let 
  - [x] Update readme with instructions for getting API keys
  - [x] Add twitter task into celery
  - [ ] Process twitter results
- - [ ] Have celery check twitter at x-frequency
  - [ ] Check if tweets are from known people
+ - [ ] Have celery check twitter at x-frequenc
  - [ ] Store tweets
  - [ ] Setup endpoint to retrieve tweets (separate, verified only, separate + verified)
  - [ ] Setup endpoint to retrieve stats
