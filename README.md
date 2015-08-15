@@ -25,6 +25,8 @@ Run `python get_access_token.py`, follow the directions, copy the access_token. 
 
 Ended up moving instagram to the bottom... didn't realize their api doesn't let you search for multiple tags at once, so I have to figure out how I want to do that...
 
+Edit: delaying cron-like celery checking for now... would be annoying for development
+
 ## Checklist
  
  - [x] Add checklist to readme, remove old stuff
@@ -39,7 +41,6 @@ Ended up moving instagram to the bottom... didn't realize their api doesn't let 
  - [X] Process twitter results
  - [x] Check if tweets are from known people
  - [x] Store tweets
- - [ ] Have celery check twitter at x-frequency
  - [ ] Setup endpoint to retrieve tweets (separate, verified only, separate + verified)
  - [ ] Setup endpoint to retrieve stats
  - [ ] Setup master endpoint with all info
@@ -62,3 +63,4 @@ Ended up moving instagram to the bottom... didn't realize their api doesn't let 
  - [ ] Setup endpoint to retrieve combined tweets and instas
  - [ ] List Pics (raw)
  - [ ] Highlight verified (team member) instas
+ - [ ] Have celery check twitter at x-frequency
