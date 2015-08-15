@@ -1,38 +1,43 @@
-{% extends 'base.html' %}
-{% block body %}
-ng-app="pollApp"
-{% endblock %}
-{% block header %}
-Tweets
-{% endblock %}
-
-{% block content %}
+{% extends 'base.html' %} {% block body %} ng-app="pollApp" {% endblock %} {% block header %} Tweets {% endblock %} {% block content %}
 <div ng-controller="tweetListController">
-    <h3>Tweets</h3>
-    <pre>[[tweets]]</pre>
-    <ul>
-        <li ng-repeat="tweet in tweets">[[tweet.content]]</li>
-    </ul>
-    <hr />
-    <h3>Team Stats</h3>
-    <pre>[[teamstats]]</pre>
-    <ul>
-        <li ng-repeat="stat in teamstats">[[stat.team_name]] ([[stat.van_name]]): [[stat.tweet_count]], [[stat.insta_count]]</li>
-    </ul>
-    <hr />
-    <h3>Member Stats</h3>
-    <pre>[[memberstats]]</pre>
-    <ul>
-        <li ng-repeat="stat in memberstats">[[stat.display_name]]: [[stat.tweet_count]], [[stat.insta_count]]</li>
-    </ul>
-    <hr />
-    <h3>Hashtag Stats</h3>
-    <pre>[[hashtagstats]]</pre>
-    <ul>
-        <li ng-repeat="stat in hashtagstats">[[stat.hashtag]]: [[stat.tweet_count]], [[stat.insta_count]], [[stat.verified_count]], [[stat.unverified_count]]</li>
-    </ul>
+    <div class="row">
+        <div class="col-sm-8">
+            <h2>(Map goes here)</h2>
+            <h3>Tweets</h3>
+            <pre>[[tweets]]</pre>
+            <hr />
+            <h3>Team Stats</h3>
+            <pre>[[teamstats]]</pre>
+            <hr />
+            <h3>Member Stats</h3>
+            <pre>[[memberstats]]</pre>
+            <hr />
+            <h3>Hashtag Stats</h3>
+            <pre>[[hashtagstats]]</pre>
+        </div>
+        <div class="col-sm-4">
+            <h3>Tweets</h3>
+            <ul>
+                <li ng-repeat="tweet in tweets">[[tweet.content]]</li>
+            </ul>
+            <hr />
+            <h3>Team Stats</h3>
+            <ul>
+                <li ng-repeat="stat in teamstats">[[stat.team_name]] ([[stat.van_name]]): [[stat.tweet_count]], [[stat.insta_count]]</li>
+            </ul>
+            <hr />
+            <h3>Member Stats</h3>
+            <ul>
+                <li ng-repeat="stat in memberstats">[[stat.display_name]]: [[stat.tweet_count]], [[stat.insta_count]]</li>
+            </ul>
+            <hr />
+            <h3>Hashtag Stats</h3>
+            <ul>
+                <li ng-repeat="stat in hashtagstats">[[stat.hashtag]]: [[stat.tweet_count]], [[stat.insta_count]], [[stat.verified_count]], [[stat.unverified_count]]</li>
+            </ul>
+        </div>
+    </div>
 </div>
-
 <script type="text/ng-template" id="tweetList">
     <ul>
         <li ng-repeat="tweet in tweets">
@@ -69,9 +74,7 @@ Tweets
     <a ui-sref="questionList"> << Back to list</a>
 </script>
 -->
-{% endblock %}
-
-{% block javascript %}
+{% endblock %} {% block javascript %}
 <script src="{{ STATIC_URL }}js/angular.js"></script>
 <script src="{{ STATIC_URL }}js/angular-ui-router.min.js"></script>
 <script src="{{ STATIC_URL}}js/app.js"></script>
