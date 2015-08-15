@@ -1,10 +1,6 @@
 controllers = angular.module('pollApp.controllers', [])
 
 controllers.controller('tweetListController', ($scope, $state, $log, $timeout, Tweets, TeamStats, MemberStats, HashtagStats) ->
-    $timeout(function() {
-      var map = mapboxService.getMapInstances()[0];
-      //mapboxService.fitMapToMarkers(map);
-    }, 100);
     Tweets.fetch()
     TeamStats.fetch()
     MemberStats.fetch()
