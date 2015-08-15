@@ -5,6 +5,20 @@ import oauth2 as oauth
 #from instagram.client import InstagramAPI
 import json
 
+def processTwitterHashtag(tweet,tweet_hashtags):
+    if len(tweet_hashtags) > 0:
+        hashtags = Hashtag.objects.all()
+        for hashtag in hashtags:
+            for tweet_hashtag in tweet_hashtags:
+                if hashtag.hashtag.lower() == tweet_hashtag.get('text').lower():
+                    hashtag.tweets.add(tweet)
+                    hashtag.tweet_count += 1
+                    if tweet.known_user:
+                        hashtag.verified_count += 1
+                    else:
+                        hashtag.unverified_count += 1
+                    hashtag.save()
+
 def teamTwitter(tweet,member):
     teams = Team.objects.all()
     for team in teams:
@@ -16,15 +30,20 @@ def teamTwitter(tweet,member):
                     team.tweet_count += 1
                     team.save()
 
-def verifiedTwitter(tweet):
+def saveVerifiedTwitter(tweet):
     ver = Verified.objects.all()
-    known = False
     for member in ver:
         if member.twitter_name.lower() == tweet.user_name.lower():
             member.tweets.add(tweet)
             member.tweet_count += 1
             member.save()
             teamTwitter(tweet,member)
+
+def verifiedTwitter(tweet):
+    ver = Verified.objects.all()
+    known = False
+    for member in ver:
+        if member.twitter_name.lower() == tweet.user_name.lower():
             known = True
     return known
 
@@ -45,16 +64,20 @@ def processTweets(tweets):
                         t.lon = tweet.get('geo').get('coordinates')[1]
             t.save()
             t.known_user = verifiedTwitter(t)
-            t.save()
+            if t.known_user:
+                saveVerifiedTwitter(t)
+                t.save()
+            processTwitterHashtag(t,tweet.get("entities").get("hashtags"))
 
 @shared_task
 def get_twitter():
     hashtags = ""
     divider = ""
+    hashmark = "%23"
     hashtag = Hashtag.objects.all()
     if len(hashtag) > 0:
         for tag in hashtag:
-            hashtags += divider + tag
+            hashtags += divider + hashmark + tag.hashtag
             divider = "&"
     else:
         hashtags = "%23freeragnarbeer" #note: %23 is the url encoding of '#'
