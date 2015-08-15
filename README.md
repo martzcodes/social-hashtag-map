@@ -42,6 +42,7 @@ Edit: delaying cron-like celery checking for now... would be annoying for develo
  - [x] Check if tweets are from known people
  - [x] Store tweets
  - [ ] Setup endpoint to retrieve tweets (separate, verified only, separate + verified)
+ - [ ] Calculate Stats
  - [ ] Setup endpoint to retrieve stats
  - [ ] Setup master endpoint with all info
  - [ ] Move to front end...

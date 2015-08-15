@@ -1,69 +1,50 @@
 services = angular.module('pollApp.services', [])
 
-
-services.factory('Choice', ($http, $log)->
-    class Choice
-        constructor: (data) ->
-            @choice_text = data.choice_text
-            @id = data.id
-            @votes = data.votes
-
-        update : ->
-            data = {'votes' : @votes, 'choice_text' : @choice_text}
-            $http({method: 'PUT', url: '/polls/choices/' + @id + '/', data:data})
-            .success (data) =>
-                $log.info("Succesfully voted")
-            .error (data) =>
-                $log.info("Failed to vote.")
-
-    return Choice
-)
-
-services.factory('Question', (Choice, $http, $log) ->
-    class Question
+services.factory('Tweet', ($http, $log) ->
+    class Tweet
         constructor : (data) ->
             if data != null
                 @init(data)
         init : (data) ->
-            @question_text = data.question_text
-            @id = data.id
-            @choices = []
-            @totalVotes = 0
-            for choice in data.choices
-                c = new Choice(choice)
-                @totalVotes += c.votes
-                @choices.push(new Choice(choice))
+            @user_name = data.user_name
+            @known_user = data.known_user
+            @content = data.content
+            @lat = data.lat
+            @lon = data.lon
+            @profile_pic = data.profile_pic
+            @content_date = data.content_date
 
-        get : (questionId) ->
-            $http({method: 'GET', url: '/polls/questions/' + questionId + '/'})
+        get : (tweetId) ->
+            $http({method: 'GET', url: '/polls/tweet/' + tweetId + '/'})
             .success (data) =>
                 @init(data)
-                $log.info("Succesfully fetched question")
+                $log.info("Succesfully fetched tweet")
             .error (data) =>
-                $log.info("Failed to fetch question.")
-    return Question
+                $log.info("Failed to fetch tweet.")
+    return Tweet
 )
 
-services.factory('Questions', ($log, $http, Question) ->
-    questions = {
+services.factory('Tweets', ($log, $http, Tweet) ->
+    $log.info("fetching tweets.")
+    tweets = {
         all : []
     }
 
     fromServer: (data) ->
-        questions['all'].length = 0
-        for question in data
-            questions['all'].push(new Question(question))
+        tweets['all'].length = 0
+        for tweet in data
+            tweets['all'].push(new Tweet(tweet))
 
     fetch: ->
-        $http({method: 'GET', url: '/polls/questions'})
+        $http({method: 'GET', url: '/polls/tweets'})
             .success (data) =>
                 @fromServer(data)
-                $log.info("Succesfully fetched questions.")
+                $log.info("Succesfully fetched tweets.")
             .error (data) =>
-                $log.info("Failed to fetch questions.")
+                $log.info("Failed to fetch tweets.")
 
     data : ->
-        return questions
+        return tweets
 )
 
 

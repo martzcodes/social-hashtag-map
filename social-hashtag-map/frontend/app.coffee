@@ -1,5 +1,4 @@
-app = angular.module('pollApp', ['ui.router','pollApp.controllers', 
-        'pollApp.services', 'pollApp.directives'])
+app = angular.module('pollApp', ['ui.router','pollApp.controllers','pollApp.services'])
 
 app.config(($interpolateProvider, $stateProvider, $urlRouterProvider) ->
     #Play nice with django's template
@@ -9,24 +8,14 @@ app.config(($interpolateProvider, $stateProvider, $urlRouterProvider) ->
     $urlRouterProvider.otherwise('/');
 
     $stateProvider
-        .state('questionList'
+        .state('tweetList'
             url: '/'
-            templateUrl: 'questionList'
-            controller: 'questionListController'
+            templateUrl: 'tweetList'
+            controller: 'tweetListController'
             resolve:
-                questions : (Questions)->
-                    Questions.fetch()
-                    return Questions.data()
-        )
-        .state('questionDetail'
-            url: '/{questionId:[0-9]+}/'
-            templateUrl: 'questionDetail'
-            controller: 'questionDetailController'
-            resolve:
-                question : ($stateParams, $log, Question)->
-                    question = new Question(null)
-                    question.get($stateParams.questionId)
-                    return question
+                tweets : (Tweets)->
+                    Tweets.fetch()
+                    return Tweets.data()
         )
 )
 
