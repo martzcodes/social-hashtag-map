@@ -67,7 +67,7 @@ DATABASES = {
 }
 
 TEMPLATE_DIRS = (
-    PROJECT_DIR.child("djangular").child('templates'),
+    PROJECT_DIR.child("social-hashtag-map").child('templates'),
 )
 
 # Internationalization
