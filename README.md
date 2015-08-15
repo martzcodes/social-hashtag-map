@@ -45,8 +45,8 @@ For some reason the controller wouldn't resolve tweets when in the stateProvider
  - [x] Store tweets
  - [x] Setup endpoint to retrieve tweets (all)
  - [x] Setup endpoint to retrieve tweets (unverified, verified, combined, has location)
- - [ ] Calculate Stats
- - [ ] Setup endpoint to retrieve stats
+ - [x] Calculate Stats
+ - [x] Setup endpoint to retrieve stats
  - [ ] Setup master endpoint with all info
  - [ ] Move to front end...
  - [x] List Tweets (raw)

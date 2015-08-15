@@ -1,10 +1,31 @@
 from rest_framework import generics, permissions, filters
 from .models import Tweet
-from .serializers import TweetSerializer
+from .serializers import TweetSerializer, HashtagStatSerializer, TeamStatSerializer, MemberStatSerializer
 from django.shortcuts import render
 import django_filters
 
 class TweetList(generics.ListAPIView):
+    queryset = Tweet.objects.all()
+    serializer_class = TweetSerializer
+    permission_classes = [
+        permissions.AllowAny
+    ]
+
+class TeamStatsList(generics.ListAPIView):
+    queryset = Tweet.objects.all()
+    serializer_class = TweetSerializer
+    permission_classes = [
+        permissions.AllowAny
+    ]
+
+class MemberStatsList(generics.ListAPIView):
+    queryset = Tweet.objects.all()
+    serializer_class = TweetSerializer
+    permission_classes = [
+        permissions.AllowAny
+    ]
+
+class HashtagStatsList(generics.ListAPIView):
     queryset = Tweet.objects.all()
     serializer_class = TweetSerializer
     permission_classes = [
