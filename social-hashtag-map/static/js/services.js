@@ -76,4 +76,109 @@
     };
   });
 
+  services.factory('VerifiedTweets', function($log, $http, Tweet) {
+    var tweets;
+    $log.info("fetching tweets.");
+    tweets = {
+      all: []
+    };
+    return {
+      fromServer: function(data) {
+        var tweet, _i, _len, _results;
+        tweets['all'].length = 0;
+        _results = [];
+        for (_i = 0, _len = data.length; _i < _len; _i++) {
+          tweet = data[_i];
+          _results.push(tweets['all'].push(new Tweet(tweet)));
+        }
+        return _results;
+      },
+      fetch: function() {
+        var _this = this;
+        return $http({
+          method: 'GET',
+          url: '/polls/tweets/verified'
+        }).success(function(data) {
+          $log.info("Succesfully fetched tweets.", data);
+          return _this.fromServer(data);
+        }).error(function(data) {
+          return $log.info("Failed to fetch tweets.");
+        });
+      },
+      data: function() {
+        return tweets;
+      }
+    };
+  });
+
+  services.factory('UnVerifiedTweets', function($log, $http, Tweet) {
+    var tweets;
+    $log.info("fetching tweets.");
+    tweets = {
+      all: []
+    };
+    return {
+      fromServer: function(data) {
+        var tweet, _i, _len, _results;
+        tweets['all'].length = 0;
+        _results = [];
+        for (_i = 0, _len = data.length; _i < _len; _i++) {
+          tweet = data[_i];
+          _results.push(tweets['all'].push(new Tweet(tweet)));
+        }
+        return _results;
+      },
+      fetch: function() {
+        var _this = this;
+        return $http({
+          method: 'GET',
+          url: '/polls/tweets/unverified'
+        }).success(function(data) {
+          $log.info("Succesfully fetched tweets.", data);
+          return _this.fromServer(data);
+        }).error(function(data) {
+          return $log.info("Failed to fetch tweets.");
+        });
+      },
+      data: function() {
+        return tweets;
+      }
+    };
+  });
+
+  services.factory('LocationTweets', function($log, $http, Tweet) {
+    var tweets;
+    $log.info("fetching tweets.");
+    tweets = {
+      all: []
+    };
+    return {
+      fromServer: function(data) {
+        var tweet, _i, _len, _results;
+        tweets['all'].length = 0;
+        _results = [];
+        for (_i = 0, _len = data.length; _i < _len; _i++) {
+          tweet = data[_i];
+          _results.push(tweets['all'].push(new Tweet(tweet)));
+        }
+        return _results;
+      },
+      fetch: function() {
+        var _this = this;
+        return $http({
+          method: 'GET',
+          url: '/polls/tweets/location'
+        }).success(function(data) {
+          $log.info("Succesfully fetched tweets.", data);
+          return _this.fromServer(data);
+        }).error(function(data) {
+          return $log.info("Failed to fetch tweets.");
+        });
+      },
+      data: function() {
+        return tweets;
+      }
+    };
+  });
+
 }).call(this);

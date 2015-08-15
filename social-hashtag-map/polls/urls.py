@@ -1,10 +1,13 @@
 from django.conf.urls import patterns, url, include
 
-from .views import TweetList #, ChoiceList, QuestionDetail, ChoiceUpdate
+from .views import TweetList, VerifiedTweetList, UnVerifiedTweetList, LocationTweetList
 
 
 urlpatterns = patterns('polls.views',
 	url(r'^tweets$', TweetList.as_view(), name='tweets_list'),
+	url(r'^tweets/verified$', VerifiedTweetList.as_view(), name='tweets_list'),
+	url(r'^tweets/unverified$', UnVerifiedTweetList.as_view(), name='tweets_list'),
+	url(r'^tweets/location$', LocationTweetList.as_view(), name='tweets_list'),
 	# url(r'^tweets/(?P<question_pk>[0-9]+)/$', QuestionDetail.as_view(), 
 	# 		name="questions_detail"),
 	# url(r'^choices$', ChoiceList.as_view(), name='choices_list'),

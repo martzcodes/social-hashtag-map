@@ -39,7 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'polls',
-    'rest_framework'
+    'rest_framework',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -55,6 +55,9 @@ ROOT_URLCONF = 'config.urls'
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.DjangoFilterBackend',)
+}
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases

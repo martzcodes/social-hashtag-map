@@ -47,4 +47,71 @@ services.factory('Tweets', ($log, $http, Tweet) ->
         return tweets
 )
 
+services.factory('VerifiedTweets', ($log, $http, Tweet) ->
+    $log.info("fetching tweets.")
+    tweets = {
+        all : []
+    }
 
+    fromServer: (data) ->
+        tweets['all'].length = 0
+        for tweet in data
+            tweets['all'].push(new Tweet(tweet))
+
+    fetch: ->
+        $http({method: 'GET', url: '/polls/tweets/verified'})
+            .success (data) =>
+                $log.info("Succesfully fetched tweets.",data)
+                @fromServer(data)
+            .error (data) =>
+                $log.info("Failed to fetch tweets.")
+
+    data : ->
+        return tweets
+)
+
+services.factory('UnVerifiedTweets', ($log, $http, Tweet) ->
+    $log.info("fetching tweets.")
+    tweets = {
+        all : []
+    }
+
+    fromServer: (data) ->
+        tweets['all'].length = 0
+        for tweet in data
+            tweets['all'].push(new Tweet(tweet))
+
+    fetch: ->
+        $http({method: 'GET', url: '/polls/tweets/unverified'})
+            .success (data) =>
+                $log.info("Succesfully fetched tweets.",data)
+                @fromServer(data)
+            .error (data) =>
+                $log.info("Failed to fetch tweets.")
+
+    data : ->
+        return tweets
+)
+
+services.factory('LocationTweets', ($log, $http, Tweet) ->
+    $log.info("fetching tweets.")
+    tweets = {
+        all : []
+    }
+
+    fromServer: (data) ->
+        tweets['all'].length = 0
+        for tweet in data
+            tweets['all'].push(new Tweet(tweet))
+
+    fetch: ->
+        $http({method: 'GET', url: '/polls/tweets/location'})
+            .success (data) =>
+                $log.info("Succesfully fetched tweets.",data)
+                @fromServer(data)
+            .error (data) =>
+                $log.info("Failed to fetch tweets.")
+
+    data : ->
+        return tweets
+)

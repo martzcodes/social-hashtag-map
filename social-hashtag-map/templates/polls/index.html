@@ -3,14 +3,21 @@
 ng-app="pollApp"
 {% endblock %}
 {% block header %}
-Polls
+Tweets
 {% endblock %}
 
 {% block content %}
 <div ng-controller="tweetListController">
+    <h3>Tweets</h3>
     <pre>[[tweets]]</pre>
     <ul>
         <li ng-repeat="tweet in tweets">[[tweet.content]]</li>
+    </ul>
+    <hr />
+    <h3>Verified</h3>
+    <pre>[[verifiedtweets]]</pre>
+    <ul>
+        <li ng-repeat="tweet in verifiedtweets">[[tweet.content]]</li>
     </ul>
 </div>
 

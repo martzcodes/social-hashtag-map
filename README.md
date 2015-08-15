@@ -36,7 +36,7 @@ For some reason the controller wouldn't resolve tweets when in the stateProvider
  - [x] pip install -r requirements.txt
  - [x] npm install
  - [x] setup models (api keys, tweet model, instagram model, tag model, team models (team, van, user))
- - [x] Install Redis `brew install redis` & `redis-server`
+ - [x] Install Redis (for celery) `brew install redis` & `redis-server`
  - [x] Integrate celery
  - [x] Update readme with instructions for getting API keys
  - [x] Add twitter task into celery
@@ -44,7 +44,7 @@ For some reason the controller wouldn't resolve tweets when in the stateProvider
  - [x] Check if tweets are from known people
  - [x] Store tweets
  - [x] Setup endpoint to retrieve tweets (all)
- - [ ] Setup endpoint to retrieve tweets (separate, verified only, separate + verified)
+ - [x] Setup endpoint to retrieve tweets (unverified, verified, combined, has location)
  - [ ] Calculate Stats
  - [ ] Setup endpoint to retrieve stats
  - [ ] Setup master endpoint with all info
