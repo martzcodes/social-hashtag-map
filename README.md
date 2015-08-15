@@ -24,14 +24,17 @@ Run `python get_access_token.py`, follow the directions, copy the access_token. 
 ## Checklist
  
  - [x] Add checklist to readme, remove old stuff
- - [x] Change requirements (Django 1.7.1, add celery, add python-oauth2, add python-instagram)
+ - [x] Change requirements (Django 1.7.1, add celery, add oauth2, add python-instagram)
  - [x] pip install -r requirements.txt
  - [x] npm install
  - [x] setup models (api keys, tweet model, instagram model, tag model, team models (team, van, user))
  - [x] Install Redis `brew install redis` & `redis-server`
  - [x] Integrate celery
  - [x] Update readme with instructions for getting API keys
- - [ ] Add twitter and instagram tasks into celery
+ - [x] Add twitter task into celery
+ - [ ] Add instagram task into celery
+ - [ ] Process twitter results
+ - [ ] Process instagram results
  - [ ] Have celery check twitter/instagram at x-frequency
  - [ ] Check if tweets/instagrams are from known people
  - [ ] Store tweets/instagrams
