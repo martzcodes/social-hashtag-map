@@ -3,7 +3,7 @@
 
   controllers = angular.module('pollApp.controllers', []);
 
-  controllers.controller('tweetListController', function($scope, $state, $log, Tweets, TeamStats, MemberStats, HashtagStats) {
+  controllers.controller('tweetListController', function($scope, $state, $log, Tweets, TeamStats, MemberStats, HashtagStats, mapboxService) {
     Tweets.fetch();
     TeamStats.fetch();
     MemberStats.fetch();

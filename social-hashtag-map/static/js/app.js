@@ -1,7 +1,13 @@
 (function() {
   var app;
 
-  app = angular.module('pollApp', ['ui.router', 'pollApp.controllers', 'pollApp.services']);
+  app = angular.module('pollApp', ['ui.router', 'pollApp.controllers', 'pollApp.services', 'angular-mapbox']);
+
+  app.run(function(mapboxService) {
+    return mapboxService.init({
+      accessToken: 'pk.eyJ1IjoibWF0dG1hcnR6IiwiYSI6IjQyOTRjNTBhOTFkNWM2OTZmOTQ4MWY5Yzg0OGJjNmY3In0.jtyfGzQVVy7Z71fblxlg0w'
+    });
+  });
 
   app.config(function($interpolateProvider, $stateProvider, $urlRouterProvider) {
     $interpolateProvider.startSymbol('[[');

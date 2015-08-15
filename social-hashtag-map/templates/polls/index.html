@@ -2,18 +2,31 @@
 <div ng-controller="tweetListController">
     <div class="row">
         <div class="col-sm-8">
-            <h2>(Map goes here)</h2>
-            <h3>Tweets</h3>
-            <pre>[[tweets]]</pre>
-            <hr />
-            <h3>Team Stats</h3>
-            <pre>[[teamstats]]</pre>
-            <hr />
-            <h3>Member Stats</h3>
-            <pre>[[memberstats]]</pre>
-            <hr />
-            <h3>Hashtag Stats</h3>
-            <pre>[[hashtagstats]]</pre>
+            <div class="row">
+                <div class="col-xs-12">
+                    <mapbox map-id="mattmartz.e71a5e8b"
+          lat="38.9152427"
+          lng="-77.0128203"
+          on-reposition="mapMovedCallback"
+          on-zoom="mapZoomedCallback"
+          zoom="12" scale-to-fit>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <h3>Tweets</h3>
+                    <pre>[[tweets]]</pre>
+                    <hr />
+                    <h3>Team Stats</h3>
+                    <pre>[[teamstats]]</pre>
+                    <hr />
+                    <h3>Member Stats</h3>
+                    <pre>[[memberstats]]</pre>
+                    <hr />
+                    <h3>Hashtag Stats</h3>
+                    <pre>[[hashtagstats]]</pre>
+                </div>
+            </div>
         </div>
         <div class="col-sm-4">
             <h3>Tweets</h3>
@@ -38,45 +51,13 @@
         </div>
     </div>
 </div>
-<script type="text/ng-template" id="tweetList">
-    <ul>
-        <li ng-repeat="tweet in tweets">
-            <a ui-sref="questionDetail({questionId:question.id})">
-                [[question.question_text]]
-            </a>
-        </li>
-    </ul>
-</script>
-<!--
-<script type="text/ng-template" id="questionDetail">
-    <form class="form" ng-submit="vote()" ng-show="!voted">
-        <h2>[[question.question_text]]</h2>
-        <div class="radio" ng-repeat="choice in question.choices">
-          <label>
-            <input type="radio" ng-model="$parent.voteChoice" 
-                name="voteChoice" value="[[choice.id]]">
-            [[choice.choice_text]]
-          </label>
-        </div>
-        <input type="submit" class="btn btn-info" />
-    </form>
-    <div ng-show="voted">
-        <h2>[[question.question_text]]</h2>
-        <div ng-repeat="choice in question.choices" style="width: 50%">
-            [[choice.choice_text]] : [[choice.votes ]]
-            <div class="progress progress-striped">
-              <div class="progress-bar progress-bar-info" 
-                choice-percentage votes="choice.votes" total="question.totalVotes" >
-              </div>
-            </div>
-        </div>
-    </div><br>
-    <a ui-sref="questionList"> << Back to list</a>
-</script>
--->
+
 {% endblock %} {% block javascript %}
+<script src='https://api.mapbox.com/mapbox.js/v2.2.1/mapbox.js'></script>
 <script src="{{ STATIC_URL }}js/angular.js"></script>
 <script src="{{ STATIC_URL }}js/angular-ui-router.min.js"></script>
+<script src="{{ STATIC_URL }}js/leaflet.markercluster.js"></script>
+<script src="{{ STATIC_URL }}js/angular-mapbox.min.js"></script>
 <script src="{{ STATIC_URL}}js/app.js"></script>
 <script src="{{ STATIC_URL}}js/controllers.js"></script>
 <script src="{{ STATIC_URL}}js/directives.js"></script>

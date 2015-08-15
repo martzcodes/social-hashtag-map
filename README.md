@@ -51,6 +51,7 @@ For some reason the controller wouldn't resolve tweets when in the stateProvider
  - [x] List Tweets (raw)
  - [x] List Stats (raw)
  - [x] General Layout
+ - [x] Add a map
  - [ ] Highlight verified (team member) tweets
  - [ ] Highlight most recent tweets
  - [ ] “Style” tweets

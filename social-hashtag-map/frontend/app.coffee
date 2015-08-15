@@ -1,4 +1,7 @@
-app = angular.module('pollApp', ['ui.router','pollApp.controllers','pollApp.services'])
+app = angular.module('pollApp', ['ui.router','pollApp.controllers','pollApp.services','angular-mapbox'])
+
+app.run (mapboxService) ->
+  mapboxService.init accessToken: 'pk.eyJ1IjoibWF0dG1hcnR6IiwiYSI6IjQyOTRjNTBhOTFkNWM2OTZmOTQ4MWY5Yzg0OGJjNmY3In0.jtyfGzQVVy7Z71fblxlg0w'
 
 app.config(($interpolateProvider, $stateProvider, $urlRouterProvider) ->
     #Play nice with django's template
