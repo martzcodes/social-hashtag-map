@@ -1,51 +1,51 @@
 from __future__ import absolute_import
-from django.db import IntegrityError
 from celery import shared_task
-from .models import SocialSetting, Hashtag, Tweet, Verified
+from .models import SocialSetting, Hashtag, Tweet, Verified, Team
 import oauth2 as oauth
 #from instagram.client import InstagramAPI
 import json
 
-# class Tweet(models.Model):
-#     user_name = models.CharField(max_length=200)
-#     known_user = models.BooleanField(default=False)
-#     content = models.CharField(max_length=200, blank=True, null=True)
-#     content_id = models.CharField(max_length=200, unique=True)
-#     content_type = models.CharField(max_length=200, blank=True, null=True)
-#     lat = models.DecimalField(decimal_places=17,max_digits=20, blank=True, null=True)
-#     lon = models.DecimalField(decimal_places=17,max_digits=20, blank=True, null=True)
-#     link = models.CharField(max_length=200, blank=True, null=True)
-#     profile_pic = models.CharField(max_length=200, blank=True, null=True)
-#     content_date = models.CharField(max_length=200, blank=True, null=True)
-#     def __unicode__(self):
-#         return self.user_name
+def teamTwitter(tweet,member):
+    teams = Team.objects.all()
+    for team in teams:
+        team_members = team.members.all()
+        if len(team_members) > 0:
+            for team_member in team_members:
+                if team_member.display_name.lower() == member.display_name.lower():
+                    team.tweets.add(tweet)
+                    team.tweet_count += 1
+                    team.save()
 
-def knownTwitter(user_name):
+def verifiedTwitter(tweet):
     ver = Verified.objects.all()
     known = False
     for member in ver:
-        if member.twitter_name == user_name:
+        if member.twitter_name.lower() == tweet.user_name.lower():
+            member.tweets.add(tweet)
+            member.tweet_count += 1
+            member.save()
+            teamTwitter(tweet,member)
             known = True
     return known
 
 def processTweets(tweets):
     for tweet in tweets.get('statuses'):
         user_name = tweet.get('user').get('screen_name')
-        t = Tweet(user_name=user_name,content_id=int(tweet.get('id')))
-        t.content = tweet.get('text')
-        t.known_user=knownTwitter(user_name)
-        t.content_date = tweet.get('created_at')
-        t.profile_pic = tweet.get('user').get('profile_image_url_https')
-        t.content_type = "tweet"
-        if tweet.get('coordinates'):
-            if tweet.get('coordinates').get('type'):
-                if tweet.get('coordinates').get('type') == 'Point':
-                    t.lat = tweet.get('geo').get('coordinates')[0]
-                    t.lon = tweet.get('geo').get('coordinates')[1]
-        try:
+        check_exist = len(Tweet.objects.filter(content_id=int(tweet.get('id'))))
+        if check_exist == 0:
+            t = Tweet(user_name=user_name,content_id=int(tweet.get('id')))
+            t.content = tweet.get('text')
+            t.content_date = tweet.get('created_at')
+            t.profile_pic = tweet.get('user').get('profile_image_url_https')
+            t.content_type = "tweet"
+            if tweet.get('coordinates'):
+                if tweet.get('coordinates').get('type'):
+                    if tweet.get('coordinates').get('type') == 'Point':
+                        t.lat = tweet.get('geo').get('coordinates')[0]
+                        t.lon = tweet.get('geo').get('coordinates')[1]
             t.save()
-        except IntegrityError as e:
-            print "Tweet Id already exists"
+            t.known_user = verifiedTwitter(t)
+            t.save()
 
 @shared_task
 def get_twitter():
