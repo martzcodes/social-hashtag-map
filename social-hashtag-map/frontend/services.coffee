@@ -38,8 +38,8 @@ services.factory('Tweets', ($log, $http, Tweet) ->
     fetch: ->
         $http({method: 'GET', url: '/polls/tweets'})
             .success (data) =>
+                $log.info("Succesfully fetched tweets.",data)
                 @fromServer(data)
-                $log.info("Succesfully fetched tweets.")
             .error (data) =>
                 $log.info("Failed to fetch tweets.")
 

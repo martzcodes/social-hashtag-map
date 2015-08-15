@@ -12,10 +12,6 @@ app.config(($interpolateProvider, $stateProvider, $urlRouterProvider) ->
             url: '/'
             templateUrl: 'tweetList'
             controller: 'tweetListController'
-            resolve:
-                tweets : (Tweets)->
-                    Tweets.fetch()
-                    return Tweets.data()
         )
 )
 

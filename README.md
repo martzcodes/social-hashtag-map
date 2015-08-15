@@ -27,6 +27,8 @@ Ended up moving instagram to the bottom... didn't realize their api doesn't let 
 
 Edit: delaying cron-like celery checking for now... would be annoying for development
 
+For some reason the controller wouldn't resolve tweets when in the stateProvider, so I bypassed it.  Will go back and fix later
+
 ## Checklist
  
  - [x] Add checklist to readme, remove old stuff
@@ -41,12 +43,13 @@ Edit: delaying cron-like celery checking for now... would be annoying for develo
  - [X] Process twitter results
  - [x] Check if tweets are from known people
  - [x] Store tweets
+ - [x] Setup endpoint to retrieve tweets (all)
  - [ ] Setup endpoint to retrieve tweets (separate, verified only, separate + verified)
  - [ ] Calculate Stats
  - [ ] Setup endpoint to retrieve stats
  - [ ] Setup master endpoint with all info
  - [ ] Move to front end...
- - [ ] List Tweets (raw)
+ - [x] List Tweets (raw)
  - [ ] List Stats (raw)
  - [ ] Highlight verified (team member) tweets
  - [ ] Highlight most recent tweets
@@ -65,3 +68,4 @@ Edit: delaying cron-like celery checking for now... would be annoying for develo
  - [ ] List Pics (raw)
  - [ ] Highlight verified (team member) instas
  - [ ] Have celery check twitter at x-frequency
+ - [ ] Fix resolve issue in stateProvider

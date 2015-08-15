@@ -10,13 +10,7 @@
     return $stateProvider.state('tweetList', {
       url: '/',
       templateUrl: 'tweetList',
-      controller: 'tweetListController',
-      resolve: {
-        tweets: function(Tweets) {
-          Tweets.fetch();
-          return Tweets.data();
-        }
-      }
+      controller: 'tweetListController'
     });
   });
 

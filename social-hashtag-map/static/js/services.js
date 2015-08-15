@@ -64,8 +64,8 @@
           method: 'GET',
           url: '/polls/tweets'
         }).success(function(data) {
-          _this.fromServer(data);
-          return $log.info("Succesfully fetched tweets.");
+          $log.info("Succesfully fetched tweets.", data);
+          return _this.fromServer(data);
         }).error(function(data) {
           return $log.info("Failed to fetch tweets.");
         });

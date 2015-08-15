@@ -8,12 +8,9 @@ Polls
 
 {% block content %}
 <div ng-controller="tweetListController">
+    <pre>[[tweets]]</pre>
     <ul>
-        <li ng-repeat="tweet in tweets">
-            <a ui-sref="questionDetail({questionId:question.id})">
-                [[question.question_text]]
-            </a>
-        </li>
+        <li ng-repeat="tweet in tweets">[[tweet.content]]</li>
     </ul>
 </div>
 
