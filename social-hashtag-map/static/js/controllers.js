@@ -11,7 +11,15 @@
     $scope.tweets = Tweets.data().all;
     $scope.teamstats = TeamStats.data().all;
     $scope.memberstats = MemberStats.data().all;
-    return $scope.hashtagstats = HashtagStats.data().all;
+    $scope.hashtagstats = HashtagStats.data().all;
+    $scope.mapMovedCallback = function(bounds) {
+      console.log('You repositioned the map to:');
+      console.log(bounds);
+    };
+    return $scope.mapZoomedCallback = function(bounds) {
+      console.log('You zoomed the map to:');
+      console.log(bounds.getCenter().toString());
+    };
   });
 
 }).call(this);

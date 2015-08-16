@@ -10,4 +10,14 @@ controllers.controller('tweetListController', ($scope, $state, $log, $timeout, T
     $scope.teamstats = TeamStats.data().all
     $scope.memberstats = MemberStats.data().all
     $scope.hashtagstats = HashtagStats.data().all
+
+    $scope.mapMovedCallback = (bounds) ->
+      console.log 'You repositioned the map to:'
+      console.log bounds
+      return
+
+    $scope.mapZoomedCallback = (bounds) ->
+      console.log 'You zoomed the map to:'
+      console.log bounds.getCenter().toString()
+      return
 )

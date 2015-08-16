@@ -9,7 +9,7 @@
           lng="-77.0128203"
           on-reposition="mapMovedCallback"
           on-zoom="mapZoomedCallback"
-          zoom="12" scale-to-fit>
+          zoom="15" scale-to-fit>
                 </div>
             </div>
             <div class="row">
@@ -30,10 +30,15 @@
         </div>
         <div class="col-sm-4">
             <h3>Tweets</h3>
-            <ul>
-                <li ng-repeat="tweet in tweets">[[tweet.content]]</li>
-            </ul>
-            <hr />
+            <div ng-repeat="tweet in tweets">
+                <h4><a href="https://twitter.com/[[tweet.user_name]]">@[[tweet.user_name]]</a> <span ng-if="tweet.known_user" class="text-muted">Verified</span></h4>
+                <div class="row">
+                    <div class="col-xs-12">
+                        [[tweet.content]]
+                    </div>
+                </div>
+                <hr />
+            </div>
             <h3>Team Stats</h3>
             <ul>
                 <li ng-repeat="stat in teamstats">[[stat.team_name]] ([[stat.van_name]]): [[stat.tweet_count]], [[stat.insta_count]]</li>
