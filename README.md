@@ -71,3 +71,7 @@ For some reason the controller wouldn't resolve tweets when in the stateProvider
  - [ ] Setup master endpoint with all info
  - [ ] Have celery check twitter at x-frequency
  - [ ] Fix resolve issue in stateProvider
+ 
+ ## Status pic
+ 
+ ![Status1](https://raw.githubusercontent.com/oehokie/social-hashtag-map/master/pics/status1.png)
