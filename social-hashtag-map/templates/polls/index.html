@@ -4,18 +4,22 @@
         <div class="col-sm-8">
             <div class="row">
                 <div class="col-xs-12">
-                    <mapbox map-id="mattmartz.e71a5e8b"
-          lat="38.9152427"
-          lng="-77.0128203"
-          on-reposition="mapMovedCallback"
-          on-zoom="mapZoomedCallback"
-          zoom="15" scale-to-fit>
+                    <mapbox map-id="mattmartz.e71a5e8b" lat="38.9152427" lng="-77.0128203" on-reposition="mapMovedCallback" on-zoom="mapZoomedCallback" zoom="15" scale-to-fit>
+                        <marker lat="38.9152427" lng="-77.0128203"><h1>Boundary Stone</h1><p>@BoundaryStoneDC</p></marker>
+                        <marker ng-repeat="tweet in location_tweets" lat="[[tweet.lat]]" lng="[[tweet.lon]]" color="#39cccc">
+                            <h1>[[tweet.content]]</h1>
+                            <p>@[[tweet.user_name]]</p>
+                        </marker>
+                    </mapbox>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-12">
                     <h3>Tweets</h3>
                     <pre>[[tweets]]</pre>
+                    <hr />
+                    <h3>Location Tweets</h3>
+                    <pre>[[location_tweets]]</pre>
                     <hr />
                     <h3>Team Stats</h3>
                     <pre>[[teamstats]]</pre>
@@ -56,7 +60,6 @@
         </div>
     </div>
 </div>
-
 {% endblock %} {% block javascript %}
 <script src='https://api.mapbox.com/mapbox.js/v2.2.1/mapbox.js'></script>
 <script src="{{ STATIC_URL }}js/angular.js"></script>

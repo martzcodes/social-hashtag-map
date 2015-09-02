@@ -53,7 +53,6 @@ For some reason the controller wouldn't resolve tweets when in the stateProvider
  - [x] General Layout
  - [x] Add a map
  - [x] Highlight verified (team member) tweets
- - [ ] Highlight most recent tweets
  - [ ] “Style” tweets
  - [ ] “Style” pics
  - [ ] “Style” Stats
@@ -70,8 +69,9 @@ For some reason the controller wouldn't resolve tweets when in the stateProvider
  - [ ] Highlight verified (team member) instas
  - [ ] Setup master endpoint with all info
  - [ ] Have celery check twitter at x-frequency
+ - [ ] Highlight most recent tweets
  - [ ] Fix resolve issue in stateProvider
  
  ## Status pic
  
- ![Status1](https://raw.githubusercontent.com/oehokie/social-hashtag-map/master/pics/status1.png)
+ ![Status1](https://raw.githubusercontent.com/oehokie/social-hashtag-map/master/pics/status2.png)

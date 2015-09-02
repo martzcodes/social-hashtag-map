@@ -149,16 +149,23 @@
   services.factory('Tweets', function($log, $http, Tweet) {
     var tweets;
     tweets = {
-      all: []
+      all: [],
+      location: []
     };
     return {
       fromServer: function(data) {
-        var tweet, _i, _len, _results;
+        var new_tweet, tweet, _i, _len, _results;
         tweets['all'].length = 0;
         _results = [];
         for (_i = 0, _len = data.length; _i < _len; _i++) {
           tweet = data[_i];
-          _results.push(tweets['all'].push(new Tweet(tweet)));
+          new_tweet = new Tweet(tweet);
+          tweets['all'].push(new_tweet);
+          if (new_tweet.lat && new_tweet.lon) {
+            _results.push(tweets['location'].push(new_tweet));
+          } else {
+            _results.push(void 0);
+          }
         }
         return _results;
       },
@@ -183,16 +190,23 @@
   services.factory('VerifiedTweets', function($log, $http, Tweet) {
     var tweets;
     tweets = {
-      all: []
+      all: [],
+      location: []
     };
     return {
       fromServer: function(data) {
-        var tweet, _i, _len, _results;
+        var new_tweet, tweet, _i, _len, _results;
         tweets['all'].length = 0;
         _results = [];
         for (_i = 0, _len = data.length; _i < _len; _i++) {
           tweet = data[_i];
-          _results.push(tweets['all'].push(new Tweet(tweet)));
+          new_tweet = new Tweet(tweet);
+          tweets['all'].push(new_tweet);
+          if (new_tweet.lat && new_tweet.lon) {
+            _results.push(tweets['location'].push(new_tweet));
+          } else {
+            _results.push(void 0);
+          }
         }
         return _results;
       },

@@ -87,13 +87,17 @@ services.factory('Team', ($http, $log) ->
 
 services.factory('Tweets', ($log, $http, Tweet) ->
     tweets = {
-        all : []
+        all : [],
+        location: []
     }
 
     fromServer: (data) ->
         tweets['all'].length = 0
         for tweet in data
-            tweets['all'].push(new Tweet(tweet))
+            new_tweet = new Tweet(tweet)
+            tweets['all'].push(new_tweet)
+            if new_tweet.lat and new_tweet.lon
+                tweets['location'].push(new_tweet)
 
     fetch: ->
         $http({method: 'GET', url: '/polls/tweets'})
@@ -109,13 +113,17 @@ services.factory('Tweets', ($log, $http, Tweet) ->
 
 services.factory('VerifiedTweets', ($log, $http, Tweet) ->
     tweets = {
-        all : []
+        all : [],
+        location: []
     }
 
     fromServer: (data) ->
         tweets['all'].length = 0
         for tweet in data
-            tweets['all'].push(new Tweet(tweet))
+            new_tweet = new Tweet(tweet)
+            tweets['all'].push(new_tweet)
+            if new_tweet.lat and new_tweet.lon
+                tweets['location'].push(new_tweet)
 
     fetch: ->
         $http({method: 'GET', url: '/polls/tweets/verified'})

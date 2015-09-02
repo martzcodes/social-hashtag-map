@@ -1,12 +1,13 @@
 controllers = angular.module('pollApp.controllers', [])
 
-controllers.controller('tweetListController', ($scope, $state, $log, $timeout, Tweets, TeamStats, MemberStats, HashtagStats) ->
+controllers.controller('tweetListController', ($scope, $state, $log, $timeout, Tweets, TeamStats, MemberStats, HashtagStats, VerifiedTweets) ->
     Tweets.fetch()
     TeamStats.fetch()
     MemberStats.fetch()
     HashtagStats.fetch()
 
     $scope.tweets = Tweets.data().all
+    $scope.location_tweets = Tweets.data().location
     $scope.teamstats = TeamStats.data().all
     $scope.memberstats = MemberStats.data().all
     $scope.hashtagstats = HashtagStats.data().all
