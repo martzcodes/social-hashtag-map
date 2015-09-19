@@ -1,16 +1,11 @@
 from rest_framework import serializers
 
-from .models import Tweet, Insta, Team, Verified, Hashtag
+from .models import Post, Verified, Hashtag
 
-class TweetSerializer(serializers.ModelSerializer):
+class PostSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Tweet
+        model = Post
         fields = ('user_name', 'known_user', 'content', 'lat', 'lon', 'profile_pic', 'content_date')
-
-class TeamStatSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Team
-        fields = ('team_name', 'van_name', 'tweet_count', 'insta_count')
 
 class MemberStatSerializer(serializers.ModelSerializer):
     class Meta:

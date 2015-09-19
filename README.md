@@ -56,7 +56,7 @@ For some reason the controller wouldn't resolve tweets when in the stateProvider
  - [ ] “Style” tweets
  - [ ] “Style” pics
  - [ ] “Style” Stats
- - [ ] Process out locations, put them on a map (mapbox?)
+ - [x] Process out locations, put them on a map (mapbox?)
  - [ ] Style map
  - [ ] Add instagram task into celery
  - [ ] Process instagram results
