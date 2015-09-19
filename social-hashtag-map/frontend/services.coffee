@@ -6,13 +6,18 @@ services.factory('Post', ($log) ->
             if data != null
                 @init(data)
         init : (data) ->
+            @name = data.display_name
             @user_name = data.user_name
             @known_user = data.known_user
             @content = data.content
-            @lat = data.lat
-            @lon = data.lon
+            if data.has_location
+                @lat = data.lat
+                @lon = data.lon
+            @thumbnail = data.thumbnail_link
+            @image = data.image_link
             @profile_pic = data.profile_pic
             @content_date = data.content_date
+            @source = data.source_type
     return Post
 )
 services.factory('Hashtag', ($log) ->
@@ -93,6 +98,8 @@ services.factory('Posts', ($log, $http, Post) ->
         all : [],
         verified: [],
         unverified: [],
+        tweets: [],
+        instas: [],
         location: []
     }
     postsReset: (callback) ->
@@ -100,6 +107,8 @@ services.factory('Posts', ($log, $http, Post) ->
             all : [],
             verified: [],
             unverified: [],
+            tweets: [],
+            instas: [],
             location: []
         }
         callback()
@@ -109,6 +118,10 @@ services.factory('Posts', ($log, $http, Post) ->
             for post in data
                 new_post = new Post(post)
                 posts['all'].push(new_post)
+                if new_post.source == 'TW'
+                    posts['tweets'].push(new_post)
+                if new_post.source == 'IN'
+                    posts['instas'].push(new_post)
                 if new_post.known_user
                     posts['verified'].push(new_post)
                     if new_post.lat and new_post.lon
@@ -130,6 +143,12 @@ services.factory('Posts', ($log, $http, Post) ->
 
     all : ->
         return posts.all
+
+    tweets : ->
+        return posts.tweets
+
+    instas : ->
+        return posts.instas
 
     location : ->
         return posts.location

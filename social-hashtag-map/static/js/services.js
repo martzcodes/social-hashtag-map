@@ -13,13 +13,19 @@
       }
 
       Post.prototype.init = function(data) {
+        this.name = data.display_name;
         this.user_name = data.user_name;
         this.known_user = data.known_user;
         this.content = data.content;
-        this.lat = data.lat;
-        this.lon = data.lon;
+        if (data.has_location) {
+          this.lat = data.lat;
+          this.lon = data.lon;
+        }
+        this.thumbnail = data.thumbnail_link;
+        this.image = data.image_link;
         this.profile_pic = data.profile_pic;
-        return this.content_date = data.content_date;
+        this.content_date = data.content_date;
+        return this.source = data.source_type;
       };
 
       return Post;
@@ -153,6 +159,8 @@
       all: [],
       verified: [],
       unverified: [],
+      tweets: [],
+      instas: [],
       location: []
     };
     return {
@@ -161,6 +169,8 @@
           all: [],
           verified: [],
           unverified: [],
+          tweets: [],
+          instas: [],
           location: []
         };
         return callback();
@@ -172,6 +182,12 @@
             post = data[_i];
             new_post = new Post(post);
             posts['all'].push(new_post);
+            if (new_post.source === 'TW') {
+              posts['tweets'].push(new_post);
+            }
+            if (new_post.source === 'IN') {
+              posts['instas'].push(new_post);
+            }
             if (new_post.known_user) {
               posts['verified'].push(new_post);
               if (new_post.lat && new_post.lon) {
@@ -201,6 +217,12 @@
       },
       all: function() {
         return posts.all;
+      },
+      tweets: function() {
+        return posts.tweets;
+      },
+      instas: function() {
+        return posts.instas;
       },
       location: function() {
         return posts.location;

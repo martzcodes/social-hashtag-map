@@ -44,6 +44,7 @@ node_modules
 *.sublime-*
 *.sqlite3*
 *.sass-cache
+dump.rdb
 
 
 /node_modules

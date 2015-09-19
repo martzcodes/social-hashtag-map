@@ -33,6 +33,7 @@ class Post(models.Model):
         (RUNKEEPER, 'Runkeeper'),
     )
     user_name = models.CharField(max_length=200)
+    display_name = models.CharField(max_length=200, blank=True, null=True)
     known_user = models.BooleanField(default=False)
     source_type = models.CharField(max_length=2,
                                       choices=SOURCE_CHOICES,

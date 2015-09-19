@@ -14,7 +14,7 @@
 </head>
 
 <body {% block body%} {% endblock %}>
-    <nav class="navbar navbar-default navbar-static-top">
+    <nav class="navbar navbar-default navbar-static-top nav-margin">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -28,8 +28,8 @@
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="#">Home</a></li>
-                    <li><a href="/about">About</a></li>
-                    <li><a href="/contact">Contact</a></li>
+                    <!--<li><a href="/about">About</a></li>
+                    <li><a href="/contact">Contact</a></li>-->
                 </ul>
                 <!--
                 <ul class="nav navbar-nav navbar-right">
@@ -42,7 +42,7 @@
             <!--/.nav-collapse -->
         </div>
     </nav>
-    <div class="container">
+    <div class="container-fluid">
         {% block content %} {% endblock %}
     </div>
     <footer class="footer">

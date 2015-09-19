@@ -2,3 +2,11 @@
   width: 100% !important;
   /* Set the fixed height of the footer here */
 }
+
+.nav-margin {
+	margin: 0 !important;
+}
+
+.insta {
+	padding: 5px !important;
+}

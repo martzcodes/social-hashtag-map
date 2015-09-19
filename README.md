@@ -53,24 +53,30 @@ For some reason the controller wouldn't resolve tweets when in the stateProvider
  - [x] General Layout
  - [x] Add a map
  - [x] Highlight verified (team member) tweets
- - [ ] “Style” tweets
- - [ ] “Style” pics
- - [ ] “Style” Stats
+ - [x] “Style” tweets
+ - [x] “Style” pics
+ - [x] “Style” Stats
  - [x] Process out locations, put them on a map (mapbox?)
- - [ ] Style map
- - [ ] Add instagram task into celery
- - [ ] Process instagram results
- - [ ] Have celery check instagram at x-frequency
- - [ ] Check if instas are from known people
- - [ ] Store instas
- - [ ] Setup endpoint to retrieve instas (separate, verified only, separate + verified)
- - [ ] Setup endpoint to retrieve combined tweets and instas
- - [ ] List Pics (raw)
- - [ ] Highlight verified (team member) instas
- - [ ] Setup master endpoint with all info
- - [ ] Have celery check twitter at x-frequency
- - [ ] Highlight most recent tweets
- - [ ] Fix resolve issue in stateProvider
+ - [x] Style map
+ - [x] Add instagram task into celery
+ - [x] Process instagram results
+ - [x] Check if instas are from known people
+ - [x] Store instas
+ - [x] Setup endpoint to retrieve instas (separate, verified only, separate + verified)
+ - [x] Setup endpoint to retrieve combined tweets and instas
+ - [x] List Pics (raw)
+ - [ ] Have celery auto-check every... minute?
+ - [ ] Highlight most recent tweets with different color, shrink the others/smaller marker
+ - [ ] Zoom map around 4 van locations?
+ - [ ] Add Van Statistics
+ - [ ] Track distance progress somehow? (loading bar?), how to report?
+ - [ ] Setup polling on front end
+ - [ ] Store only recent XX posts
+ - [ ] Setup page to view tweets
+ - [ ] Setup page to view instagram pics
+ - [ ] Containerize for Docker
+ - [ ] Deploy!
+
  
  ## Status pic
  
