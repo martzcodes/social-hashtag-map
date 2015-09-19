@@ -1,7 +1,7 @@
 services = angular.module('pollApp.services', [])
 
-services.factory('Tweet', ($http, $log) ->
-    class Tweet
+services.factory('Post', ($log) ->
+    class Post
         constructor : (data) ->
             if data != null
                 @init(data)
@@ -13,236 +13,230 @@ services.factory('Tweet', ($http, $log) ->
             @lon = data.lon
             @profile_pic = data.profile_pic
             @content_date = data.content_date
-
-        get : (tweetId) ->
-            $http({method: 'GET', url: '/polls/tweet/' + tweetId + '/'})
-            .success (data) =>
-                @init(data)
-                $log.info("Succesfully fetched tweet")
-            .error (data) =>
-                $log.info("Failed to fetch tweet.")
-    return Tweet
+    return Post
 )
-
-services.factory('Hashtag', ($http, $log) ->
-    class Tweet
+services.factory('Hashtag', ($log) ->
+    class Hashtag
         constructor : (data) ->
             if data != null
                 @init(data)
         init : (data) ->
             @hashtag = data.hashtag
-            @tweet_count = data.tweet_count
-            @insta_count = data.insta_count
-            @verified_count = data.verified_count
-            @unverified_count = data.unverified_count
-
-        get : (tweetId) ->
-            $http({method: 'GET', url: '/polls/tweet/' + tweetId + '/'})
-            .success (data) =>
-                @init(data)
-                $log.info("Succesfully fetched tweet")
-            .error (data) =>
-                $log.info("Failed to fetch tweet.")
-    return Tweet
+            @verified = data.verified_count
+            @unverified = data.unverified_count
+    return Hashtag
 )
-services.factory('Member', ($http, $log) ->
-    class Tweet
+services.factory('Member', ($log) ->
+    class Member
         constructor : (data) ->
             if data != null
                 @init(data)
         init : (data) ->
             @display_name = data.display_name
             @tweet_count = data.tweet_count
-            @insta_count = data.content
-
-        get : (tweetId) ->
-            $http({method: 'GET', url: '/polls/tweet/' + tweetId + '/'})
-            .success (data) =>
-                @init(data)
-                $log.info("Succesfully fetched tweet")
-            .error (data) =>
-                $log.info("Failed to fetch tweet.")
-    return Tweet
+            @insta_count = data.insta_count
+            @team = data.team_choice
+            @van = data.van_choice
+            @runner = data.runner_number
+    return Member
 )
-services.factory('Team', ($http, $log) ->
-    class Tweet
+services.factory('Van', ($log) ->
+    class Van
         constructor : (data) ->
             if data != null
                 @init(data)
         init : (data) ->
-            @team_name = data.team_name
-            @van_name = data.van_name
+            if data.van == 'V1'
+                @name = 'Van 1'
+            if data.van == 'V2'
+                @name = 'Van 2'
             @tweet_count = data.tweet_count
             @insta_count = data.insta_count
-
-        get : (tweetId) ->
-            $http({method: 'GET', url: '/polls/tweet/' + tweetId + '/'})
-            .success (data) =>
+            @runners = [data]
+    return Van
+)
+services.factory('Team', ($log, Van) ->
+    class Team
+        constructor : (data) ->
+            if data != null
                 @init(data)
-                $log.info("Succesfully fetched tweet")
-            .error (data) =>
-                $log.info("Failed to fetch tweet.")
-    return Tweet
+        init : (data) ->
+            if data.team == 'T1'
+                @name = 'Team 1'
+            else if data.team == 'T2'
+                @name = 'Team 2'
+            else
+                @name = 'Boundary Stone Supporters'
+            @tweet_count = data.tweet_count
+            @insta_count = data.insta_count
+            if data.team == 'T1' or data.team == 'T2'
+                @vans = []
+                @runners = [data]
+                @processVan(data)
+        processVan : (data) ->
+            van_index = @vans.map((van) ->
+                van.name
+            ).indexOf(data.van)
+            if van_index != -1
+                @vans[van_index]['tweet_count'] += data.tweet_count
+                @vans[van_index]['insta_count'] += data.insta_count
+                @vans[van_index]['runners'].push(data)
+            else
+                new_van = new Van(data)
+                @vans.push(new_van)
+
+    return Team
 )
 
-services.factory('Tweets', ($log, $http, Tweet) ->
-    tweets = {
+services.factory('Posts', ($log, $http, Post) ->
+    posts = {
         all : [],
+        verified: [],
+        unverified: [],
         location: []
     }
+    postsReset: (callback) ->
+        posts = {
+            all : [],
+            verified: [],
+            unverified: [],
+            location: []
+        }
+        callback()
 
-    fromServer: (data) ->
-        tweets['all'].length = 0
-        for tweet in data
-            new_tweet = new Tweet(tweet)
-            tweets['all'].push(new_tweet)
-            if new_tweet.lat and new_tweet.lon
-                tweets['location'].push(new_tweet)
+    fromServer: (data,callback) ->
+        @postsReset ->
+            for post in data
+                new_post = new Post(post)
+                posts['all'].push(new_post)
+                if new_post.known_user
+                    posts['verified'].push(new_post)
+                    if new_post.lat and new_post.lon
+                        posts['location'].push(new_post)
+                else
+                    posts['unverified'].push(new_post)
+            callback()
 
-    fetch: ->
-        $http({method: 'GET', url: '/polls/tweets'})
+    fetch: (callback) ->
+        $http({method: 'GET', url: '/polls/posts'})
             .success (data) =>
-                $log.info("Succesfully fetched tweets.")
-                @fromServer(data)
+                $log.info("Succesfully fetched posts.")
+                @fromServer(data,callback)
             .error (data) =>
-                $log.info("Failed to fetch tweets.")
+                $log.info("Failed to fetch posts.")
 
     data : ->
-        return tweets
+        return posts
+
+    all : ->
+        return posts.all
+
+    location : ->
+        return posts.location
+
+    verified : ->
+        return posts.verified
+
+    unverified : ->
+        return posts.unverified
 )
 
-services.factory('VerifiedTweets', ($log, $http, Tweet) ->
-    tweets = {
-        all : [],
-        location: []
-    }
-
-    fromServer: (data) ->
-        tweets['all'].length = 0
-        for tweet in data
-            new_tweet = new Tweet(tweet)
-            tweets['all'].push(new_tweet)
-            if new_tweet.lat and new_tweet.lon
-                tweets['location'].push(new_tweet)
-
-    fetch: ->
-        $http({method: 'GET', url: '/polls/tweets/verified'})
-            .success (data) =>
-                $log.info("Succesfully fetched tweets.")
-                @fromServer(data)
-            .error (data) =>
-                $log.info("Failed to fetch tweets.")
-
-    data : ->
-        return tweets
-)
-
-services.factory('UnVerifiedTweets', ($log, $http, Tweet) ->
-    tweets = {
-        all : []
-    }
-
-    fromServer: (data) ->
-        tweets['all'].length = 0
-        for tweet in data
-            tweets['all'].push(new Tweet(tweet))
-
-    fetch: ->
-        $http({method: 'GET', url: '/polls/tweets/unverified'})
-            .success (data) =>
-                $log.info("Succesfully fetched tweets.")
-                @fromServer(data)
-            .error (data) =>
-                $log.info("Failed to fetch tweets.")
-
-    data : ->
-        return tweets
-)
-
-services.factory('LocationTweets', ($log, $http, Tweet) ->
-    tweets = {
-        all : []
-    }
-
-    fromServer: (data) ->
-        tweets['all'].length = 0
-        for tweet in data
-            tweets['all'].push(new Tweet(tweet))
-
-    fetch: ->
-        $http({method: 'GET', url: '/polls/tweets/location'})
-            .success (data) =>
-                $log.info("Succesfully fetched tweets.")
-                @fromServer(data)
-            .error (data) =>
-                $log.info("Failed to fetch tweets.")
-
-    data : ->
-        return tweets
-)
-
-services.factory('TeamStats', ($log, $http, Team) ->
-    teams = {
-        all : []
-    }
-
-    fromServer: (data) ->
-        teams['all'].length = 0
-        for team in data
-            teams['all'].push(new Team(team))
-
-    fetch: ->
-        $http({method: 'GET', url: '/polls/team/stats'})
-            .success (data) =>
-                $log.info("Succesfully fetched teams.")
-                @fromServer(data)
-            .error (data) =>
-                $log.info("Failed to fetch teams.")
-
-    data : ->
-        return teams
-)
-
-services.factory('MemberStats', ($log, $http, Member) ->
+services.factory('MemberStats', ($log, $http, Member, Team) ->
     members = {
-        all : []
+        all : [],
+        teams : []
     }
 
-    fromServer: (data) ->
-        members['all'].length = 0
-        for member in data
-            members['all'].push(new Member(member))
+    membersReset: (callback) ->
+        members = {
+            all : [],
+            teams : []
+        }
+        callback()
 
-    fetch: ->
+    fromServer: (data,callback) ->
+        @membersReset ->
+            for member in data
+                new_member = new Member(member)
+                members['all'].push(new_member)
+                team_index = members['teams'].map((team) ->
+                    team.name
+                ).indexOf(new_member.team)
+                if team_index != -1
+                    members['teams'][team_index]['tweet_count'] += new_member.tweet_count
+                    members['teams'][team_index]['insta_count'] += new_member.insta_count
+                    members['teams'][team_index].processVan(new_member)
+                    members['teams'][team_index]['runners'].push(new_member)
+                else
+                    new_team = new Team(new_member)
+                    members['teams'].push(new_team)
+            callback()
+
+    fetch: (callback) ->
         $http({method: 'GET', url: '/polls/member/stats'})
             .success (data) =>
                 $log.info("Succesfully fetched members.")
-                @fromServer(data)
+                @fromServer(data,callback)
             .error (data) =>
                 $log.info("Failed to fetch members.")
 
     data : ->
         return members
+
+    all : ->
+        return members.all
+
+    teams : ->
+        return members.teams
 )
 
 services.factory('HashtagStats', ($log, $http, Hashtag) ->
     hashtags = {
-        all : []
+        all : [],
+        verified : 0,
+        unverified : 0,
+        total: 0
     }
 
-    fromServer: (data) ->
-        hashtags['all'].length = 0
-        for hashtag in data
-            hashtags['all'].push(new Hashtag(hashtag))
+    hashtagsReset: (callback) ->
+        hashtags = {
+            all : [],
+            verified : 0,
+            unverified : 0,
+            total: 0
+        }
+        callback()
 
-    fetch: ->
+    fromServer: (data,callback) ->
+        @hashtagsReset ->
+            for hashtag in data
+                new_hashtag = new Hashtag(hashtag)
+                hashtags['all'].push(new_hashtag)
+                hashtags['verified'] += new_hashtag.verified
+                hashtags['unverified'] += new_hashtag.unverified
+                hashtags['total'] += new_hashtag.verified + new_hashtag.unverified
+            callback()
+
+    fetch: (callback) ->
         $http({method: 'GET', url: '/polls/hashtag/stats'})
             .success (data) =>
                 $log.info("Succesfully fetched hashtags.")
-                @fromServer(data)
+                @fromServer(data,callback)
             .error (data) =>
                 $log.info("Failed to fetch hashtags.")
 
     data : ->
         return hashtags
+
+    all : ->
+        return hashtags.all
+
+    verified : ->
+        return hashtags.verified
+
+    unverified : ->
+        return hashtags.unverified
+
+    counts : ->
+        return {verified: hashtags.verified, unverified: hashtags.unverified, total: hashtags.total}
 )

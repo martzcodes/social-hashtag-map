@@ -1,25 +1,25 @@
-{% extends 'base.html' %} {% block body %} ng-app="pollApp" {% endblock %} {% block header %} Tweets {% endblock %} {% block content %}
-<div ng-controller="tweetListController">
+{% extends 'base.html' %} {% block body %} ng-app="pollApp" {% endblock %} {% block header %} Posts {% endblock %} {% block content %}
+<div ng-controller="postListController">
     <div class="row">
         <div class="col-sm-8">
             <div class="row">
                 <div class="col-xs-12">
                     <mapbox map-id="mattmartz.e71a5e8b" lat="38.9152427" lng="-77.0128203" on-reposition="mapMovedCallback" on-zoom="mapZoomedCallback" zoom="15" scale-to-fit>
                         <marker lat="38.9152427" lng="-77.0128203"><h1>Boundary Stone</h1><p>@BoundaryStoneDC</p></marker>
-                        <marker ng-repeat="tweet in location_tweets" lat="[[tweet.lat]]" lng="[[tweet.lon]]" color="#39cccc">
-                            <h1>[[tweet.content]]</h1>
-                            <p>@[[tweet.user_name]]</p>
+                        <marker ng-repeat="post in location_posts" lat="[[post.lat]]" lng="[[post.lon]]" color="#39cccc">
+                            <h1>[[post.content]]</h1>
+                            <p>@[[post.user_name]]</p>
                         </marker>
                     </mapbox>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-12">
-                    <h3>Tweets</h3>
-                    <pre>[[tweets]]</pre>
+                    <h3>Posts</h3>
+                    <pre>[[posts]]</pre>
                     <hr />
-                    <h3>Location Tweets</h3>
-                    <pre>[[location_tweets]]</pre>
+                    <h3>Location Posts</h3>
+                    <pre>[[location_posts]]</pre>
                     <hr />
                     <h3>Team Stats</h3>
                     <pre>[[teamstats]]</pre>
@@ -33,29 +33,19 @@
             </div>
         </div>
         <div class="col-sm-4">
-            <h3>Tweets</h3>
-            <div ng-repeat="tweet in tweets">
-                <h4><a href="https://twitter.com/[[tweet.user_name]]">@[[tweet.user_name]]</a> <span ng-if="tweet.known_user" class="text-muted">Verified</span></h4>
+            <h3>Posts</h3>
+            <div ng-repeat="post in posts">
+                <h4><a href="https://twitter.com/[[post.user_name]]">@[[post.user_name]]</a> <span ng-if="post.known_user" class="text-muted">Verified</span></h4>
                 <div class="row">
                     <div class="col-xs-12">
-                        [[tweet.content]]
+                        [[post.content]]
                     </div>
                 </div>
                 <hr />
             </div>
             <h3>Team Stats</h3>
             <ul>
-                <li ng-repeat="stat in teamstats">[[stat.team_name]] ([[stat.van_name]]): [[stat.tweet_count]], [[stat.insta_count]]</li>
-            </ul>
-            <hr />
-            <h3>Member Stats</h3>
-            <ul>
-                <li ng-repeat="stat in memberstats">[[stat.display_name]]: [[stat.tweet_count]], [[stat.insta_count]]</li>
-            </ul>
-            <hr />
-            <h3>Hashtag Stats</h3>
-            <ul>
-                <li ng-repeat="stat in hashtagstats">[[stat.hashtag]]: [[stat.tweet_count]], [[stat.insta_count]], [[stat.verified_count]], [[stat.unverified_count]]</li>
+                <li ng-repeat="stat in teamstats">[[stat.team_name]] ([[stat.van_name]]): [[stat.post_count]], [[stat.insta_count]]</li>
             </ul>
         </div>
     </div>

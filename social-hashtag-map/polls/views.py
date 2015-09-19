@@ -28,27 +28,6 @@ class HashtagStatsList(generics.ListAPIView):
         permissions.AllowAny
     ]
 
-class VerifiedPostList(generics.ListAPIView):
-    queryset = Post.objects.filter(known_user=True)
-    serializer_class = PostSerializer
-    permission_classes = [
-        permissions.AllowAny
-    ]
-
-class UnVerifiedPostList(generics.ListAPIView):
-    queryset = Post.objects.filter(known_user=False)
-    serializer_class = PostSerializer
-    permission_classes = [
-        permissions.AllowAny
-    ]
-
-class LocationPostList(generics.ListAPIView):
-    queryset = Post.objects.filter(lat__isnull=False,lon__isnull=False)
-    serializer_class = PostSerializer
-    permission_classes = [
-        permissions.AllowAny
-    ]
-
 # class AllStatsList(generics.ListAPIView):
 #     serializer_class = StatsSerializer
 #     def get_queryset(self):

@@ -10,12 +10,12 @@ class PostSerializer(serializers.ModelSerializer):
 class MemberStatSerializer(serializers.ModelSerializer):
     class Meta:
         model = Verified
-        fields = ('display_name', 'tweet_count', 'insta_count')
+        fields = ('display_name', 'tweet_count', 'insta_count', 'team_choice', 'van_choice', 'runner_number')
 
 class HashtagStatSerializer(serializers.ModelSerializer):
     class Meta:
         model = Hashtag
-        fields = ('hashtag', 'tweet_count', 'insta_count', 'verified_count', 'unverified_count')
+        fields = ('hashtag', 'verified_count', 'unverified_count')
 
 # class StatSerializer(serializers.Serializer):
 #     pk = serializers.Field()

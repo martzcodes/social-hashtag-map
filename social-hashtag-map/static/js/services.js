@@ -3,16 +3,16 @@
 
   services = angular.module('pollApp.services', []);
 
-  services.factory('Tweet', function($http, $log) {
-    var Tweet;
-    Tweet = (function() {
-      function Tweet(data) {
+  services.factory('Post', function($log) {
+    var Post;
+    Post = (function() {
+      function Post(data) {
         if (data !== null) {
           this.init(data);
         }
       }
 
-      Tweet.prototype.init = function(data) {
+      Post.prototype.init = function(data) {
         this.user_name = data.user_name;
         this.known_user = data.known_user;
         this.content = data.content;
@@ -22,344 +22,255 @@
         return this.content_date = data.content_date;
       };
 
-      Tweet.prototype.get = function(tweetId) {
-        var _this = this;
-        return $http({
-          method: 'GET',
-          url: '/polls/tweet/' + tweetId + '/'
-        }).success(function(data) {
-          _this.init(data);
-          return $log.info("Succesfully fetched tweet");
-        }).error(function(data) {
-          return $log.info("Failed to fetch tweet.");
-        });
-      };
-
-      return Tweet;
+      return Post;
 
     })();
-    return Tweet;
+    return Post;
   });
 
-  services.factory('Hashtag', function($http, $log) {
-    var Tweet;
-    Tweet = (function() {
-      function Tweet(data) {
+  services.factory('Hashtag', function($log) {
+    var Hashtag;
+    Hashtag = (function() {
+      function Hashtag(data) {
         if (data !== null) {
           this.init(data);
         }
       }
 
-      Tweet.prototype.init = function(data) {
+      Hashtag.prototype.init = function(data) {
         this.hashtag = data.hashtag;
-        this.tweet_count = data.tweet_count;
-        this.insta_count = data.insta_count;
-        this.verified_count = data.verified_count;
-        return this.unverified_count = data.unverified_count;
+        this.verified = data.verified_count;
+        return this.unverified = data.unverified_count;
       };
 
-      Tweet.prototype.get = function(tweetId) {
-        var _this = this;
-        return $http({
-          method: 'GET',
-          url: '/polls/tweet/' + tweetId + '/'
-        }).success(function(data) {
-          _this.init(data);
-          return $log.info("Succesfully fetched tweet");
-        }).error(function(data) {
-          return $log.info("Failed to fetch tweet.");
-        });
-      };
-
-      return Tweet;
+      return Hashtag;
 
     })();
-    return Tweet;
+    return Hashtag;
   });
 
-  services.factory('Member', function($http, $log) {
-    var Tweet;
-    Tweet = (function() {
-      function Tweet(data) {
+  services.factory('Member', function($log) {
+    var Member;
+    Member = (function() {
+      function Member(data) {
         if (data !== null) {
           this.init(data);
         }
       }
 
-      Tweet.prototype.init = function(data) {
+      Member.prototype.init = function(data) {
         this.display_name = data.display_name;
         this.tweet_count = data.tweet_count;
-        return this.insta_count = data.content;
+        this.insta_count = data.insta_count;
+        this.team = data.team_choice;
+        this.van = data.van_choice;
+        return this.runner = data.runner_number;
       };
 
-      Tweet.prototype.get = function(tweetId) {
-        var _this = this;
-        return $http({
-          method: 'GET',
-          url: '/polls/tweet/' + tweetId + '/'
-        }).success(function(data) {
-          _this.init(data);
-          return $log.info("Succesfully fetched tweet");
-        }).error(function(data) {
-          return $log.info("Failed to fetch tweet.");
-        });
-      };
-
-      return Tweet;
+      return Member;
 
     })();
-    return Tweet;
+    return Member;
   });
 
-  services.factory('Team', function($http, $log) {
-    var Tweet;
-    Tweet = (function() {
-      function Tweet(data) {
+  services.factory('Van', function($log) {
+    var Van;
+    Van = (function() {
+      function Van(data) {
         if (data !== null) {
           this.init(data);
         }
       }
 
-      Tweet.prototype.init = function(data) {
-        this.team_name = data.team_name;
-        this.van_name = data.van_name;
+      Van.prototype.init = function(data) {
+        if (data.van === 'V1') {
+          this.name = 'Van 1';
+        }
+        if (data.van === 'V2') {
+          this.name = 'Van 2';
+        }
         this.tweet_count = data.tweet_count;
-        return this.insta_count = data.insta_count;
+        this.insta_count = data.insta_count;
+        return this.runners = [data];
       };
 
-      Tweet.prototype.get = function(tweetId) {
-        var _this = this;
-        return $http({
-          method: 'GET',
-          url: '/polls/tweet/' + tweetId + '/'
-        }).success(function(data) {
-          _this.init(data);
-          return $log.info("Succesfully fetched tweet");
-        }).error(function(data) {
-          return $log.info("Failed to fetch tweet.");
-        });
-      };
-
-      return Tweet;
+      return Van;
 
     })();
-    return Tweet;
+    return Van;
   });
 
-  services.factory('Tweets', function($log, $http, Tweet) {
-    var tweets;
-    tweets = {
+  services.factory('Team', function($log, Van) {
+    var Team;
+    Team = (function() {
+      function Team(data) {
+        if (data !== null) {
+          this.init(data);
+        }
+      }
+
+      Team.prototype.init = function(data) {
+        if (data.team === 'T1') {
+          this.name = 'Team 1';
+        } else if (data.team === 'T2') {
+          this.name = 'Team 2';
+        } else {
+          this.name = 'Boundary Stone Supporters';
+        }
+        this.tweet_count = data.tweet_count;
+        this.insta_count = data.insta_count;
+        if (data.team === 'T1' || data.team === 'T2') {
+          this.vans = [];
+          this.runners = [data];
+          return this.processVan(data);
+        }
+      };
+
+      Team.prototype.processVan = function(data) {
+        var new_van, van_index;
+        van_index = this.vans.map(function(van) {
+          return van.name;
+        }).indexOf(data.van);
+        if (van_index !== -1) {
+          this.vans[van_index]['tweet_count'] += data.tweet_count;
+          this.vans[van_index]['insta_count'] += data.insta_count;
+          return this.vans[van_index]['runners'].push(data);
+        } else {
+          new_van = new Van(data);
+          return this.vans.push(new_van);
+        }
+      };
+
+      return Team;
+
+    })();
+    return Team;
+  });
+
+  services.factory('Posts', function($log, $http, Post) {
+    var posts;
+    posts = {
       all: [],
+      verified: [],
+      unverified: [],
       location: []
     };
     return {
-      fromServer: function(data) {
-        var new_tweet, tweet, _i, _len, _results;
-        tweets['all'].length = 0;
-        _results = [];
-        for (_i = 0, _len = data.length; _i < _len; _i++) {
-          tweet = data[_i];
-          new_tweet = new Tweet(tweet);
-          tweets['all'].push(new_tweet);
-          if (new_tweet.lat && new_tweet.lon) {
-            _results.push(tweets['location'].push(new_tweet));
-          } else {
-            _results.push(void 0);
+      postsReset: function(callback) {
+        posts = {
+          all: [],
+          verified: [],
+          unverified: [],
+          location: []
+        };
+        return callback();
+      },
+      fromServer: function(data, callback) {
+        return this.postsReset(function() {
+          var new_post, post, _i, _len;
+          for (_i = 0, _len = data.length; _i < _len; _i++) {
+            post = data[_i];
+            new_post = new Post(post);
+            posts['all'].push(new_post);
+            if (new_post.known_user) {
+              posts['verified'].push(new_post);
+              if (new_post.lat && new_post.lon) {
+                posts['location'].push(new_post);
+              }
+            } else {
+              posts['unverified'].push(new_post);
+            }
           }
-        }
-        return _results;
+          return callback();
+        });
       },
-      fetch: function() {
+      fetch: function(callback) {
         var _this = this;
         return $http({
           method: 'GET',
-          url: '/polls/tweets'
+          url: '/polls/posts'
         }).success(function(data) {
-          $log.info("Succesfully fetched tweets.");
-          return _this.fromServer(data);
+          $log.info("Succesfully fetched posts.");
+          return _this.fromServer(data, callback);
         }).error(function(data) {
-          return $log.info("Failed to fetch tweets.");
+          return $log.info("Failed to fetch posts.");
         });
       },
       data: function() {
-        return tweets;
+        return posts;
+      },
+      all: function() {
+        return posts.all;
+      },
+      location: function() {
+        return posts.location;
+      },
+      verified: function() {
+        return posts.verified;
+      },
+      unverified: function() {
+        return posts.unverified;
       }
     };
   });
 
-  services.factory('VerifiedTweets', function($log, $http, Tweet) {
-    var tweets;
-    tweets = {
-      all: [],
-      location: []
-    };
-    return {
-      fromServer: function(data) {
-        var new_tweet, tweet, _i, _len, _results;
-        tweets['all'].length = 0;
-        _results = [];
-        for (_i = 0, _len = data.length; _i < _len; _i++) {
-          tweet = data[_i];
-          new_tweet = new Tweet(tweet);
-          tweets['all'].push(new_tweet);
-          if (new_tweet.lat && new_tweet.lon) {
-            _results.push(tweets['location'].push(new_tweet));
-          } else {
-            _results.push(void 0);
-          }
-        }
-        return _results;
-      },
-      fetch: function() {
-        var _this = this;
-        return $http({
-          method: 'GET',
-          url: '/polls/tweets/verified'
-        }).success(function(data) {
-          $log.info("Succesfully fetched tweets.");
-          return _this.fromServer(data);
-        }).error(function(data) {
-          return $log.info("Failed to fetch tweets.");
-        });
-      },
-      data: function() {
-        return tweets;
-      }
-    };
-  });
-
-  services.factory('UnVerifiedTweets', function($log, $http, Tweet) {
-    var tweets;
-    tweets = {
-      all: []
-    };
-    return {
-      fromServer: function(data) {
-        var tweet, _i, _len, _results;
-        tweets['all'].length = 0;
-        _results = [];
-        for (_i = 0, _len = data.length; _i < _len; _i++) {
-          tweet = data[_i];
-          _results.push(tweets['all'].push(new Tweet(tweet)));
-        }
-        return _results;
-      },
-      fetch: function() {
-        var _this = this;
-        return $http({
-          method: 'GET',
-          url: '/polls/tweets/unverified'
-        }).success(function(data) {
-          $log.info("Succesfully fetched tweets.");
-          return _this.fromServer(data);
-        }).error(function(data) {
-          return $log.info("Failed to fetch tweets.");
-        });
-      },
-      data: function() {
-        return tweets;
-      }
-    };
-  });
-
-  services.factory('LocationTweets', function($log, $http, Tweet) {
-    var tweets;
-    tweets = {
-      all: []
-    };
-    return {
-      fromServer: function(data) {
-        var tweet, _i, _len, _results;
-        tweets['all'].length = 0;
-        _results = [];
-        for (_i = 0, _len = data.length; _i < _len; _i++) {
-          tweet = data[_i];
-          _results.push(tweets['all'].push(new Tweet(tweet)));
-        }
-        return _results;
-      },
-      fetch: function() {
-        var _this = this;
-        return $http({
-          method: 'GET',
-          url: '/polls/tweets/location'
-        }).success(function(data) {
-          $log.info("Succesfully fetched tweets.");
-          return _this.fromServer(data);
-        }).error(function(data) {
-          return $log.info("Failed to fetch tweets.");
-        });
-      },
-      data: function() {
-        return tweets;
-      }
-    };
-  });
-
-  services.factory('TeamStats', function($log, $http, Team) {
-    var teams;
-    teams = {
-      all: []
-    };
-    return {
-      fromServer: function(data) {
-        var team, _i, _len, _results;
-        teams['all'].length = 0;
-        _results = [];
-        for (_i = 0, _len = data.length; _i < _len; _i++) {
-          team = data[_i];
-          _results.push(teams['all'].push(new Team(team)));
-        }
-        return _results;
-      },
-      fetch: function() {
-        var _this = this;
-        return $http({
-          method: 'GET',
-          url: '/polls/team/stats'
-        }).success(function(data) {
-          $log.info("Succesfully fetched teams.");
-          return _this.fromServer(data);
-        }).error(function(data) {
-          return $log.info("Failed to fetch teams.");
-        });
-      },
-      data: function() {
-        return teams;
-      }
-    };
-  });
-
-  services.factory('MemberStats', function($log, $http, Member) {
+  services.factory('MemberStats', function($log, $http, Member, Team) {
     var members;
     members = {
-      all: []
+      all: [],
+      teams: []
     };
     return {
-      fromServer: function(data) {
-        var member, _i, _len, _results;
-        members['all'].length = 0;
-        _results = [];
-        for (_i = 0, _len = data.length; _i < _len; _i++) {
-          member = data[_i];
-          _results.push(members['all'].push(new Member(member)));
-        }
-        return _results;
+      membersReset: function(callback) {
+        members = {
+          all: [],
+          teams: []
+        };
+        return callback();
       },
-      fetch: function() {
+      fromServer: function(data, callback) {
+        return this.membersReset(function() {
+          var member, new_member, new_team, team_index, _i, _len;
+          for (_i = 0, _len = data.length; _i < _len; _i++) {
+            member = data[_i];
+            new_member = new Member(member);
+            members['all'].push(new_member);
+            team_index = members['teams'].map(function(team) {
+              return team.name;
+            }).indexOf(new_member.team);
+            if (team_index !== -1) {
+              members['teams'][team_index]['tweet_count'] += new_member.tweet_count;
+              members['teams'][team_index]['insta_count'] += new_member.insta_count;
+              members['teams'][team_index].processVan(new_member);
+              members['teams'][team_index]['runners'].push(new_member);
+            } else {
+              new_team = new Team(new_member);
+              members['teams'].push(new_team);
+            }
+          }
+          return callback();
+        });
+      },
+      fetch: function(callback) {
         var _this = this;
         return $http({
           method: 'GET',
           url: '/polls/member/stats'
         }).success(function(data) {
           $log.info("Succesfully fetched members.");
-          return _this.fromServer(data);
+          return _this.fromServer(data, callback);
         }).error(function(data) {
           return $log.info("Failed to fetch members.");
         });
       },
       data: function() {
         return members;
+      },
+      all: function() {
+        return members.all;
+      },
+      teams: function() {
+        return members.teams;
       }
     };
   });
@@ -367,33 +278,65 @@
   services.factory('HashtagStats', function($log, $http, Hashtag) {
     var hashtags;
     hashtags = {
-      all: []
+      all: [],
+      verified: 0,
+      unverified: 0,
+      total: 0
     };
     return {
-      fromServer: function(data) {
-        var hashtag, _i, _len, _results;
-        hashtags['all'].length = 0;
-        _results = [];
-        for (_i = 0, _len = data.length; _i < _len; _i++) {
-          hashtag = data[_i];
-          _results.push(hashtags['all'].push(new Hashtag(hashtag)));
-        }
-        return _results;
+      hashtagsReset: function(callback) {
+        hashtags = {
+          all: [],
+          verified: 0,
+          unverified: 0,
+          total: 0
+        };
+        return callback();
       },
-      fetch: function() {
+      fromServer: function(data, callback) {
+        return this.hashtagsReset(function() {
+          var hashtag, new_hashtag, _i, _len;
+          for (_i = 0, _len = data.length; _i < _len; _i++) {
+            hashtag = data[_i];
+            new_hashtag = new Hashtag(hashtag);
+            hashtags['all'].push(new_hashtag);
+            hashtags['verified'] += new_hashtag.verified;
+            hashtags['unverified'] += new_hashtag.unverified;
+            hashtags['total'] += new_hashtag.verified + new_hashtag.unverified;
+          }
+          return callback();
+        });
+      },
+      fetch: function(callback) {
         var _this = this;
         return $http({
           method: 'GET',
           url: '/polls/hashtag/stats'
         }).success(function(data) {
           $log.info("Succesfully fetched hashtags.");
-          return _this.fromServer(data);
+          return _this.fromServer(data, callback);
         }).error(function(data) {
           return $log.info("Failed to fetch hashtags.");
         });
       },
       data: function() {
         return hashtags;
+      },
+      all: function() {
+        return hashtags.all;
+      },
+      verified: function() {
+        return hashtags.verified;
+      },
+      unverified: function() {
+        return hashtags.unverified;
+      },
+      counts: function() {
+        return {
+          verified: hashtags.verified,
+          unverified: hashtags.unverified,
+          total: hashtags.total
+        };
       }
     };
   });

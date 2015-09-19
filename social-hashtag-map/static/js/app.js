@@ -15,7 +15,7 @@
     $urlRouterProvider.otherwise('/');
     return $stateProvider.state('tweetList', {
       url: '/',
-      controller: 'tweetListController'
+      controller: 'postListController'
     });
   });
 

@@ -51,35 +51,6 @@ class Post(models.Model):
     def __unicode__(self):
         return self.user_name
 
-# class Tweet(models.Model):
-#     user_name = models.CharField(max_length=200)
-#     known_user = models.BooleanField(default=False)
-#     content = models.CharField(max_length=200, blank=True, null=True)
-#     content_id = models.CharField(max_length=200, unique=True)
-#     content_type = models.CharField(max_length=200, blank=True, null=True)
-#     lat = models.DecimalField(decimal_places=17,max_digits=20, blank=True, null=True)
-#     lon = models.DecimalField(decimal_places=17,max_digits=20, blank=True, null=True)
-#     link = models.CharField(max_length=200, blank=True, null=True)
-#     profile_pic = models.CharField(max_length=200, blank=True, null=True)
-#     content_date = models.CharField(max_length=200, blank=True, null=True)
-#     def __unicode__(self):
-#         return self.user_name
-
-# class Insta(models.Model):
-#     user_name = models.CharField(max_length=200)
-#     content_id = models.CharField(max_length=200, unique=True)
-#     known_user = models.BooleanField(default=False)
-#     caption_text = models.CharField(max_length=200, blank=True, null=True)
-#     content_type = models.CharField(max_length=200, blank=True, null=True)
-#     thumbnail_link = models.CharField(max_length=200, blank=True, null=True)
-#     image_link = models.CharField(max_length=200, blank=True, null=True)
-#     lat = models.DecimalField(decimal_places=17,max_digits=20, blank=True, null=True)
-#     lon = models.DecimalField(decimal_places=17,max_digits=20, blank=True, null=True)
-#     link = models.CharField(max_length=200, blank=True, null=True)
-#     content_date = models.CharField(max_length=200, blank=True, null=True)
-#     def __unicode__(self):
-#         return self.user_name
-
 class Verified(models.Model):
     HOMEBASE = 'XX'
     TEAMONE = 'T1'
@@ -115,17 +86,6 @@ class Verified(models.Model):
     insta_count = models.IntegerField(default=0)
     def __unicode__(self):
         return self.display_name
-
-# class Team(models.Model):
-#     members = models.ManyToManyField(Verified)
-#     team_name = models.CharField(max_length=200)
-#     van_name = models.CharField(max_length=200, blank=True, null=True)
-#     tweets = models.ManyToManyField(Tweet)
-#     instas = models.ManyToManyField(Insta)
-#     tweet_count = models.IntegerField(default=0)
-#     insta_count = models.IntegerField(default=0)
-#     def __unicode__(self):
-#         return self.team_name
 
 class Hashtag(models.Model):
     hashtag = models.CharField(max_length=200)

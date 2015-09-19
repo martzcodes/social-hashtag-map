@@ -13,7 +13,7 @@ app.config(($interpolateProvider, $stateProvider, $urlRouterProvider) ->
     $stateProvider
         .state('tweetList'
             url: '/'
-            controller: 'tweetListController'
+            controller: 'postListController'
         )
 )
 

@@ -66,7 +66,7 @@ def get_twitter():
     if len(hashtag) > 0:
         for tag in hashtag:
             hashtags += divider + hashmark + tag.hashtag
-            divider = "&"
+            divider = "+OR+"
     else:
         hashtags = "%23freeragnarbeer" #note: %23 is the url encoding of '#'
     api = SocialSetting.objects.filter(api_type='TW')
