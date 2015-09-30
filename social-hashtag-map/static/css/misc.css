@@ -9,4 +9,14 @@
 
 .insta {
 	padding: 5px !important;
+	overflow-x: auto !important;
+}
+
+.tweets-header {
+	height: 30px !important;
+}
+
+.tweets {
+	height: 470px !important;
+	overflow-y: auto !important;
 }

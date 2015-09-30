@@ -1,6 +1,31 @@
 # social-hashtag-map
 Subscribe to twitter/instagram hashtags, verify users, put them on a map
 
+## Deployment
+
+### Requirements
+
+```
+Docker and Docker composed installed
+git installed
+```
+
+### Deploy
+
+```
+git clone https://github.com/oehokie/social-hashtag-map.git
+cd social-hashtag-map
+sudo chmod +x run_web.sh
+sudo chmod +x run_celery.sh
+docker-compose build
+docker-compose up
+```
+
+Save your db.sqlite3 file located in social-hashtag-map/social-hashtag-map and you can copy it to new builds.  After the git clone part you'd copy it into the folder
+
+Then go to localhost:8000 (or your computer's IP address:8000)
+
+
 ## Based on
 
  - [Djangular](https://github.com/TrackMaven/Djangular.git)
@@ -65,17 +90,24 @@ For some reason the controller wouldn't resolve tweets when in the stateProvider
  - [x] Setup endpoint to retrieve instas (separate, verified only, separate + verified)
  - [x] Setup endpoint to retrieve combined tweets and instas
  - [x] List Pics (raw)
- - [ ] Have celery auto-check every... minute?
+ - [x] Have celery auto-check every... minute?
+ - [x] Containerize for Docker
+ - [x] Change color / icon of exchange points
+ - [x] Limit tweet height to X and make scroll div
+ - [ ] Setup polling on front end
+ - [ ] Paginate tweets / responses (limit to 10 each?)
+ - [ ] Deploy!
+
+ ### Nice to haves
+
+ - [ ] Add a hashtag filter
  - [ ] Highlight most recent tweets with different color, shrink the others/smaller marker
  - [ ] Zoom map around 4 van locations?
  - [ ] Add Van Statistics
  - [ ] Track distance progress somehow? (loading bar?), how to report?
- - [ ] Setup polling on front end
  - [ ] Store only recent XX posts
  - [ ] Setup page to view tweets
  - [ ] Setup page to view instagram pics
- - [ ] Containerize for Docker
- - [ ] Deploy!
 
  
  ## Status pic
