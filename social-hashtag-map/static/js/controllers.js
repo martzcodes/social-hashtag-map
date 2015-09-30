@@ -3,7 +3,8 @@
 
   controllers = angular.module('pollApp.controllers', []);
 
-  controllers.controller('postListController', function($scope, Posts, MemberStats, HashtagStats) {
+  controllers.controller('postListController', function($scope, $interval, Posts, MemberStats, HashtagStats) {
+    var checkPosts, fetchPosts;
     $scope.exchange_points = [
       {
         name: 'Start',
@@ -227,19 +228,27 @@
         lon: '-77.002'
       }
     ];
-    Posts.fetch(function() {
-      $scope.posts = Posts.all();
-      $scope.tweets = Posts.tweets();
-      $scope.instas = Posts.instas();
-      $scope.location_posts = Posts.location();
-      MemberStats.fetch(function() {
-        $scope.memberstats = MemberStats.all();
-        return $scope.teamstats = MemberStats.teams();
+    fetchPosts = function() {
+      return Posts.fetch(function(posts) {
+        $scope.posts = posts.all.reverse();
+        $scope.tweets = posts.tweets.reverse();
+        $scope.instas = posts.instas.reverse();
+        return $scope.location_posts = posts.location.reverse();
+        /*
+        MemberStats.fetch ->
+          $scope.memberstats = MemberStats.all()
+          $scope.teamstats = MemberStats.teams()
+        HashtagStats.fetch ->
+          $scope.hashtagstats = HashtagStats.counts()
+        */
+
       });
-      return HashtagStats.fetch(function() {
-        return $scope.hashtagstats = HashtagStats.counts();
-      });
-    });
+    };
+    checkPosts = function() {
+      return fetchPosts();
+    };
+    fetchPosts();
+    $interval(checkPosts, 30000);
     $scope.mapMovedCallback = function(bounds) {
       console.log('You repositioned the map to:');
       console.log(bounds);

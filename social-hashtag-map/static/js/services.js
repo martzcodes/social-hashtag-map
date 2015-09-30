@@ -197,10 +197,22 @@
               posts['unverified'].push(new_post);
             }
           }
-          return callback();
+          return callback(posts);
         });
       },
       fetch: function(callback) {
+        var _this = this;
+        return $http({
+          method: 'GET',
+          url: '/polls/posts'
+        }).success(function(data) {
+          $log.info("Succesfully fetched posts.");
+          return _this.fromServer(data, callback);
+        }).error(function(data) {
+          return $log.info("Failed to fetch posts.");
+        });
+      },
+      check: function(callback) {
         var _this = this;
         return $http({
           method: 'GET',

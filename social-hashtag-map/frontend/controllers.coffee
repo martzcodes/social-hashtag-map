@@ -1,6 +1,6 @@
 controllers = angular.module('pollApp.controllers', [])
 
-controllers.controller('postListController', ($scope, Posts, MemberStats, HashtagStats) ->
+controllers.controller('postListController', ($scope, $interval, Posts, MemberStats, HashtagStats) ->
   $scope.exchange_points = [
     {name:'Start',lat:'39.700',lon:'-78.653'},
     {name:'Exchange 1', runner:1,van:1,lat:'39.701',lon:'-78.651'},
@@ -40,16 +40,27 @@ controllers.controller('postListController', ($scope, Posts, MemberStats, Hashta
     {name:'Exchange 35', runner:11,van:2,lat:'38.867',lon:'-77.046'},
     {name:'Finish', runner:12,van:2,lat:'38.873',lon:'-77.002'}
   ]
-  Posts.fetch ->
-    $scope.posts = Posts.all()
-    $scope.tweets = Posts.tweets()
-    $scope.instas = Posts.instas()
-    $scope.location_posts = Posts.location()
-    MemberStats.fetch ->
-      $scope.memberstats = MemberStats.all()
-      $scope.teamstats = MemberStats.teams()
-    HashtagStats.fetch ->
-      $scope.hashtagstats = HashtagStats.counts()
+
+  fetchPosts = ->
+    Posts.fetch (posts) ->
+      $scope.posts = posts.all.reverse()
+      # console.log(posts.all)
+      $scope.tweets = posts.tweets.reverse()
+      $scope.instas = posts.instas.reverse()
+      $scope.location_posts = posts.location.reverse()
+      ###
+      MemberStats.fetch ->
+        $scope.memberstats = MemberStats.all()
+        $scope.teamstats = MemberStats.teams()
+      HashtagStats.fetch ->
+        $scope.hashtagstats = HashtagStats.counts()
+      ###
+
+  checkPosts = ->
+    fetchPosts()
+
+  fetchPosts()
+  $interval checkPosts, 30000
 
   $scope.mapMovedCallback = (bounds) ->
     console.log 'You repositioned the map to:'

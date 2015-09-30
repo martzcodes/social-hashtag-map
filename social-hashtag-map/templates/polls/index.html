@@ -28,6 +28,7 @@
                     <div ng-repeat="tweet in tweets">
                         <h4 ng-if="tweet.known_user"><a href="https://twitter.com/[[tweet.user_name]]">[[tweet.name]]</a> <span class="text-muted">Verified</span></h4>
                         <h4 ng-if="!tweet.known_user"><a href="https://twitter.com/[[tweet.user_name]]">@[[tweet.user_name]]</a></h4>
+                        <span>[[tweet.content_date | date]]</span>
                         <div class="row">
                             <div class="col-xs-12">
                                 [[tweet.content]]
@@ -37,25 +38,6 @@
                     </div>
                 </div>
             </div>
-            <!--
-            <div class="row">
-                <h3>Team Stats</h3>
-                <div class="col-xs-6" ng-repeat="team in teamstats">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            [[team.name]]: [[team.tweet_count]]|[[team.insta_count]]
-                        </div>
-                        <hr/>
-                    </div>
-                    <div class="row" ng-repeat="van in team.vans">
-                        <div class="col-xs-12">
-                            [[van.name]]: [[van.tweet_count]]|[[van.insta_count]]
-                        </div>
-                        <hr/>
-                    </div>
-                </div>
-            </div>
-            -->
         </div>
     </div>
     <div class="row">
@@ -67,26 +49,6 @@
                     <h4><a href="https://instagram.com/[[insta.user_name]]">[[insta.name]]</a> <span ng-if="insta.known_user" class="text-muted">Verified</span></h4>
                 </div>
             </div>
-            <!--
-            <div class="row">
-                <div class="col-xs-12">
-                    <h3>Posts</h3>
-                    <pre>[[posts]]</pre>
-                    <hr />
-                    <h3>Location Posts</h3>
-                    <pre>[[location_posts]]</pre>
-                    <hr />
-                    <h3>Team Stats</h3>
-                    <pre>[[teamstats]]</pre>
-                    <hr />
-                    <h3>Member Stats</h3>
-                    <pre>[[memberstats]]</pre>
-                    <hr />
-                    <h3>Hashtag Stats</h3>
-                    <pre>[[hashtagstats]]</pre>
-                </div>
-            </div>
-            -->
         </div>
     </div>
 </div>

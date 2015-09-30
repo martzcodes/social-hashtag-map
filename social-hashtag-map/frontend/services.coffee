@@ -128,9 +128,17 @@ services.factory('Posts', ($log, $http, Post) ->
                         posts['location'].push(new_post)
                 else
                     posts['unverified'].push(new_post)
-            callback()
+            callback(posts)
 
     fetch: (callback) ->
+        $http({method: 'GET', url: '/polls/posts'})
+            .success (data) =>
+                $log.info("Succesfully fetched posts.")
+                @fromServer(data,callback)
+            .error (data) =>
+                $log.info("Failed to fetch posts.")
+
+    check: (callback) ->
         $http({method: 'GET', url: '/polls/posts'})
             .success (data) =>
                 $log.info("Succesfully fetched posts.")
