@@ -104,8 +104,6 @@ REDIS_DB = 0
 REDIS_HOST = os.environ.get('REDIS_PORT_6379_TCP_ADDR', '127.0.0.1')
 CELERY_RESULT_BACKEND = 'redis://%s:%d/%d' % (REDIS_HOST, REDIS_PORT, REDIS_DB)
 CELERY_REDIS_MAX_CONNECTIONS = 1
-CELERY_TASK_SERIALIZER = "json"
-CELERY_ACCEPT_CONTENT = ['application/json']
 CELERYBEAT_SCHEDULE = {
     'social-every-60-seconds': {
         'task': 'tasks.get_social',
