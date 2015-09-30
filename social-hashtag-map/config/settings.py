@@ -106,10 +106,12 @@ CELERY_RESULT_BACKEND = 'redis://%s:%d/%d' % (REDIS_HOST, REDIS_PORT, REDIS_DB)
 CELERY_REDIS_MAX_CONNECTIONS = 1
 CELERYBEAT_SCHEDULE = {
     'social-every-60-seconds': {
-        'task': 'tasks.get_social',
+        'task': 'polls.tasks.get_social',
         'schedule': timedelta(seconds=60)
     }
 }
+
+# CELERY_IMPORTS=("polls.tasks")
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/

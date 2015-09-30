@@ -45,6 +45,7 @@ node_modules
 *.sqlite3*
 *.sass-cache
 dump.rdb
+social-hashtag-map/celerybeat-schedule
 
 
 /node_modules
