@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 from unipath import Path
+from datetime import timedelta
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 PROJECT_DIR = Path(__file__).ancestor(3)
@@ -69,6 +70,17 @@ DATABASES = {
     }
 }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': os.environ.get('DB_ENV_DB', 'postgres'),
+#         'USER': os.environ.get('DB_ENV_POSTGRES_USER', 'postgres'),
+#         'PASSWORD': os.environ.get('DB_ENV_POSTGRES_PASSWORD', ''),
+#         'HOST': os.environ.get('DB_PORT_5432_TCP_ADDR', ''),
+#         'PORT': os.environ.get('DB_PORT_5432_TCP_PORT', ''),
+#     },
+# }
+
 TEMPLATE_DIRS = (
     PROJECT_DIR.child("social-hashtag-map").child('templates'),
 )
@@ -86,7 +98,20 @@ USE_L10N = True
 
 USE_TZ = True
 
-CELERY_RESULT_BACKEND = 'redis://localhost'
+# CELERY_RESULT_BACKEND = 'redis://localhost'
+REDIS_PORT = 6379
+REDIS_DB = 0
+REDIS_HOST = os.environ.get('REDIS_PORT_6379_TCP_ADDR', '127.0.0.1')
+CELERY_RESULT_BACKEND = 'redis://%s:%d/%d' % (REDIS_HOST, REDIS_PORT, REDIS_DB)
+CELERY_REDIS_MAX_CONNECTIONS = 1
+CELERY_TASK_SERIALIZER = "json"
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERYBEAT_SCHEDULE = {
+    'social-every-60-seconds': {
+        'task': 'tasks.get_social',
+        'schedule': timedelta(seconds=60)
+    }
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
