@@ -1,15 +1,8 @@
-# database container
-# db:
-#   image: postgres:9.4
-#   environment:
-#     - POSTGRES_PASSWORD=mysecretpassword
 # redis container
 redis:
   image: redis:2.8.19
-  restart: always
 # container with Django web server
 web:
-  restart: always
   build: .  # build using default Dockerfile
   command: ./run_web.sh
   volumes:
@@ -18,15 +11,12 @@ web:
     - "8000:8000"
   # set up links so that web knows about db, rabbit and redis
   links:
-    # - db:db
     - redis:redis
 # container with redis worker
 worker:
-  restart: always
   build: .
   command: ./run_celery.sh
   volumes:
     - .:/app
   links:
-    # - db:db
     - redis:redis
