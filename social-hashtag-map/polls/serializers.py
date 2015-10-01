@@ -5,7 +5,7 @@ from .models import Post, Verified, Hashtag
 class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
-        fields = ('user_name', 'known_user', 'content', 'lat', 'lon', 'profile_pic', 'content_date', 'source_type', 'has_location', 'thumbnail_link', 'image_link', 'display_name')
+        fields = ('id', 'user_name', 'known_user', 'content', 'lat', 'lon', 'profile_pic', 'content_date', 'source_type', 'has_location', 'thumbnail_link', 'image_link', 'display_name')
 
 class MemberStatSerializer(serializers.ModelSerializer):
     class Meta:

@@ -9,14 +9,14 @@
                             <h1>Boundary Stone</h1>
                             <p>@BoundaryStoneDC</p>
                         </marker>
-                        <marker ng-repeat="post in location_posts" lat="[[post.lat]]" lng="[[post.lon]]" color="#39cccc">
+                        <marker ng-repeat="post in location_posts" lat="[[post.lat]]" lng="[[post.lon]]" color="[[post.color]]">
                             <h1>[[post.content]]</h1>
                             <p>@[[post.name]]</p>
                         </marker>
                         <marker ng-repeat="ep in exchange_points" lat="[[ep.lat]]" lng="[[ep.lon]]" size="small">
                             <h1>[[ep.name]]</h1>
                         </marker>
-                        <marker current-location></marker>
+                        <marker current-location color="#39cc39" size="small"></marker>
                     </mapbox>
                 </div>
             </div>
@@ -28,7 +28,7 @@
                     <div ng-repeat="tweet in tweets">
                         <h4 ng-if="tweet.known_user"><a href="https://twitter.com/[[tweet.user_name]]">[[tweet.name]]</a> <span class="text-muted">Verified</span></h4>
                         <h4 ng-if="!tweet.known_user"><a href="https://twitter.com/[[tweet.user_name]]">@[[tweet.user_name]]</a></h4>
-                        <span>[[tweet.content_date | date]]</span>
+                        <span ng-if="tweet.new" class="text-danger">NEW:  </span><span>[[tweet.content_date | date]]</span>
                         <div class="row">
                             <div class="col-xs-12">
                                 [[tweet.content]]

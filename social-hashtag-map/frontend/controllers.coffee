@@ -41,16 +41,14 @@ controllers.controller('postListController', ($scope, $interval, Posts, MemberSt
     {name:'Finish', runner:12,van:2,lat:'38.873',lon:'-77.002'}
   ]
 
-  Posts.recent () ->
-    console.log("here")
-
   fetchPosts = ->
-    Posts.fetch (posts) ->
+    Posts.getLocation (location_posts) ->
+      $scope.location_posts = location_posts.reverse()
+    Posts.getRecent (posts) ->
       $scope.posts = posts.all.reverse()
       # console.log(posts.all)
       $scope.tweets = posts.tweets.reverse()
       $scope.instas = posts.instas.reverse()
-      $scope.location_posts = posts.location.reverse()
       ###
       MemberStats.fetch ->
         $scope.memberstats = MemberStats.all()
@@ -60,7 +58,11 @@ controllers.controller('postListController', ($scope, $interval, Posts, MemberSt
       ###
 
   checkPosts = ->
-    fetchPosts()
+    Posts.getRecent (posts) ->
+      $scope.posts = posts.all.reverse()
+      $scope.tweets = posts.tweets.reverse()
+      $scope.instas = posts.instas.reverse()
+      $scope.location_posts = posts.location
 
   fetchPosts()
   $interval checkPosts, 30000

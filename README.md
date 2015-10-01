@@ -94,18 +94,18 @@ For some reason the controller wouldn't resolve tweets when in the stateProvider
  - [x] Containerize for Docker
  - [x] Change color / icon of exchange points
  - [x] Limit tweet height to X and make scroll div
- - [ ] Setup polling on front end
- - [ ] Paginate tweets / responses (limit to 10 each?)
+ - [x] Setup polling on front end
+ - [x] Paginate tweets / responses (limit to 10 each?)
  - [ ] Deploy!
 
  ### Nice to haves
 
  - [ ] Add a hashtag filter
- - [ ] Highlight most recent tweets with different color, shrink the others/smaller marker
+ - [x] Highlight most recent tweets with different color, shrink the others/smaller marker
  - [ ] Zoom map around 4 van locations?
  - [ ] Add Van Statistics
  - [ ] Track distance progress somehow? (loading bar?), how to report?
- - [ ] Store only recent XX posts
+ - [x] Store only recent XX posts
  - [ ] Setup page to view tweets
  - [ ] Setup page to view instagram pics
 

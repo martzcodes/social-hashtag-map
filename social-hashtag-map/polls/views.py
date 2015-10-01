@@ -8,7 +8,7 @@ import django_filters
 
 class PostList(generics.ListAPIView):
     #queryset = Post.objects.all()
-    queryset = Post.objects.exclude(content__exact='')
+    queryset = Post.objects.exclude(content__exact='').order_by('id')
     serializer_class = PostSerializer
     permission_classes = [
         permissions.AllowAny
@@ -16,7 +16,7 @@ class PostList(generics.ListAPIView):
 
 class PostListRecent(generics.ListAPIView):
     #queryset = Post.objects.all()
-    queryset = Post.objects.exclude(content__exact='').order_by('-id')[:2]
+    queryset = Post.objects.exclude(content__exact='').order_by('-id')[:10]
     serializer_class = PostSerializer
     permission_classes = [
         permissions.AllowAny
@@ -24,7 +24,7 @@ class PostListRecent(generics.ListAPIView):
 
 class PostListLocation(generics.ListAPIView):
     #queryset = Post.objects.all()
-    queryset = Post.objects.exclude(content__exact='').filter(has_location=True)
+    queryset = Post.objects.exclude(content__exact='').filter(known_user=True).filter(has_location=True)
     serializer_class = PostSerializer
     permission_classes = [
         permissions.AllowAny

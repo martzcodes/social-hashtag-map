@@ -228,15 +228,14 @@
         lon: '-77.002'
       }
     ];
-    Posts.recent(function() {
-      return console.log("here");
-    });
     fetchPosts = function() {
-      return Posts.fetch(function(posts) {
+      Posts.getLocation(function(location_posts) {
+        return $scope.location_posts = location_posts.reverse();
+      });
+      return Posts.getRecent(function(posts) {
         $scope.posts = posts.all.reverse();
         $scope.tweets = posts.tweets.reverse();
-        $scope.instas = posts.instas.reverse();
-        return $scope.location_posts = posts.location.reverse();
+        return $scope.instas = posts.instas.reverse();
         /*
         MemberStats.fetch ->
           $scope.memberstats = MemberStats.all()
@@ -248,7 +247,12 @@
       });
     };
     checkPosts = function() {
-      return fetchPosts();
+      return Posts.getRecent(function(posts) {
+        $scope.posts = posts.all.reverse();
+        $scope.tweets = posts.tweets.reverse();
+        $scope.instas = posts.instas.reverse();
+        return $scope.location_posts = posts.location;
+      });
     };
     fetchPosts();
     $interval(checkPosts, 30000);

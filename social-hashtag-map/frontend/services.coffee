@@ -6,6 +6,7 @@ services.factory('Post', ($log) ->
             if data != null
                 @init(data)
         init : (data) ->
+            @id = data.id
             @name = data.display_name
             @user_name = data.user_name
             @known_user = data.known_user
@@ -18,6 +19,8 @@ services.factory('Post', ($log) ->
             @profile_pic = data.profile_pic
             @content_date = data.content_date
             @source = data.source_type
+            @new = false
+            @color = "#39cccc"
     return Post
 )
 services.factory('Hashtag', ($log) ->
@@ -113,6 +116,13 @@ services.factory('Posts', ($log, $http, Post) ->
         }
         callback()
 
+    checkExists: (post,type) ->
+        postExists = false
+        for old_post in posts[type]
+            if old_post.id == post.id
+                postExists = true
+        return postExists
+
     fromServer: (data,callback) ->
         @postsReset ->
             for post in data
@@ -130,25 +140,78 @@ services.factory('Posts', ($log, $http, Post) ->
                     posts['unverified'].push(new_post)
             callback(posts)
 
-    fetch: (callback) ->
+    clearNew: () ->
+        for post in posts['all']
+            post.new = false
+            post.color = "#39cccc"
+        for post in posts['verified']
+            post.new = false
+            post.color = "#39cccc"
+        for post in posts['unverified']
+            post.new = false
+            post.color = "#39cccc"
+        for post in posts['tweets']
+            post.new = false
+            post.color = "#39cccc"
+        for post in posts['instas']
+            post.new = false
+            post.color = "#39cccc"
+        for post in posts['location']
+            post.new = false
+            post.color = "#39cccc"
+
+    processRecent: (data,callback) ->
+        for post in data
+            new_post = new Post(post)
+            new_post.new = true
+            new_post.color = "#cc3939"
+            if !@checkExists(new_post,'all')
+                posts['all'].push(new_post)
+                if new_post.source == 'TW'
+                    posts['tweets'].push(new_post)
+                if new_post.source == 'IN'
+                    posts['instas'].push(new_post)
+                if new_post.known_user
+                    posts['verified'].push(new_post)
+                    if new_post.lat and new_post.lon
+                        if !@checkExists(new_post,'location')
+                            posts['location'].push(new_post)
+                else
+                    posts['unverified'].push(new_post)
+        callback(angular.copy(posts))
+
+    processLocation: (data,callback) ->
+        for post in data
+            new_post = new Post(post)
+            new_post.new = true
+            new_post.color = "#cc3939"
+            if !@checkExists(new_post,'location')
+                posts['location'].push(new_post)
+        callback(posts['location'])
+
+    getAll: (callback) ->
         $http({method: 'GET', url: '/polls/posts'})
             .success (data) =>
                 $log.info("Succesfully fetched posts.")
-                @fromServer(data,callback)
+                @fromServer(data.reverse(),callback)
             .error (data) =>
                 $log.info("Failed to fetch posts.")
 
-    recent: (callback) ->
+    getRecent: (callback) ->
+        @clearNew()
         $http({method: 'GET', url: '/polls/posts/recent'})
             .success (data) =>
                 $log.info("Succesfully fetched recent posts.")
+                @processRecent(data.reverse(),callback)
             .error (data) =>
                 $log.info("Failed to fetch posts.")
-    recent: (callback) ->
-        $http({method: 'GET', url: '/polls/posts/recent'})
+
+    getLocation: (callback) ->
+        @clearNew()
+        $http({method: 'GET', url: '/polls/posts/location'})
             .success (data) =>
                 $log.info("Succesfully fetched location posts.")
-                #@fromServer(data,callback)
+                @processLocation(data,callback)
             .error (data) =>
                 $log.info("Failed to fetch posts.")
 

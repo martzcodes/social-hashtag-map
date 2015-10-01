@@ -20,3 +20,8 @@
 	height: 470px !important;
 	overflow-y: auto !important;
 }
+
+.new_tweet {
+	border-style: solid !important;
+	border-left: thick double #ff0000;
+}
