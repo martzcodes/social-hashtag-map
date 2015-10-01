@@ -138,11 +138,17 @@ services.factory('Posts', ($log, $http, Post) ->
             .error (data) =>
                 $log.info("Failed to fetch posts.")
 
-    check: (callback) ->
-        $http({method: 'GET', url: '/polls/posts'})
+    recent: (callback) ->
+        $http({method: 'GET', url: '/polls/posts/recent'})
             .success (data) =>
-                $log.info("Succesfully fetched posts.")
-                @fromServer(data,callback)
+                $log.info("Succesfully fetched recent posts.")
+            .error (data) =>
+                $log.info("Failed to fetch posts.")
+    recent: (callback) ->
+        $http({method: 'GET', url: '/polls/posts/recent'})
+            .success (data) =>
+                $log.info("Succesfully fetched location posts.")
+                #@fromServer(data,callback)
             .error (data) =>
                 $log.info("Failed to fetch posts.")
 

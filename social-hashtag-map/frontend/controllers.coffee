@@ -41,6 +41,9 @@ controllers.controller('postListController', ($scope, $interval, Posts, MemberSt
     {name:'Finish', runner:12,van:2,lat:'38.873',lon:'-77.002'}
   ]
 
+  Posts.recent () ->
+    console.log("here")
+
   fetchPosts = ->
     Posts.fetch (posts) ->
       $scope.posts = posts.all.reverse()

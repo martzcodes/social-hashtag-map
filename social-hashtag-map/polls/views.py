@@ -14,6 +14,22 @@ class PostList(generics.ListAPIView):
         permissions.AllowAny
     ]
 
+class PostListRecent(generics.ListAPIView):
+    #queryset = Post.objects.all()
+    queryset = Post.objects.exclude(content__exact='').order_by('-id')[:2]
+    serializer_class = PostSerializer
+    permission_classes = [
+        permissions.AllowAny
+    ]
+
+class PostListLocation(generics.ListAPIView):
+    #queryset = Post.objects.all()
+    queryset = Post.objects.exclude(content__exact='').filter(has_location=True)
+    serializer_class = PostSerializer
+    permission_classes = [
+        permissions.AllowAny
+    ]
+
 class MemberStatsList(generics.ListAPIView):
     queryset = Verified.objects.all()
     serializer_class = MemberStatSerializer

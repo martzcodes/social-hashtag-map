@@ -1,10 +1,12 @@
 from django.conf.urls import patterns, url, include
 
-from .views import PostList, MemberStatsList, HashtagStatsList
+from .views import PostList, PostListRecent, PostListLocation, MemberStatsList, HashtagStatsList
 
 
 urlpatterns = patterns('polls.views',
     url(r'^posts$', PostList.as_view(), name='posts_list'),
+    url(r'^posts/recent$', PostListRecent.as_view(), name='posts_list'),
+    url(r'^posts/location$', PostListLocation.as_view(), name='posts_list'),
     url(r'^member/stats$', MemberStatsList.as_view(), name='posts_list'),
     url(r'^hashtag/stats$', HashtagStatsList.as_view(), name='posts_list'),
     # url(r'^posts/(?P<question_pk>[0-9]+)/$', QuestionDetail.as_view(), 

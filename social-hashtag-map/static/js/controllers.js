@@ -228,6 +228,9 @@
         lon: '-77.002'
       }
     ];
+    Posts.recent(function() {
+      return console.log("here");
+    });
     fetchPosts = function() {
       return Posts.fetch(function(posts) {
         $scope.posts = posts.all.reverse();

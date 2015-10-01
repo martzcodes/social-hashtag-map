@@ -212,14 +212,24 @@
           return $log.info("Failed to fetch posts.");
         });
       },
-      check: function(callback) {
+      recent: function(callback) {
         var _this = this;
         return $http({
           method: 'GET',
-          url: '/polls/posts'
+          url: '/polls/posts/recent'
         }).success(function(data) {
-          $log.info("Succesfully fetched posts.");
-          return _this.fromServer(data, callback);
+          return $log.info("Succesfully fetched recent posts.");
+        }).error(function(data) {
+          return $log.info("Failed to fetch posts.");
+        });
+      },
+      recent: function(callback) {
+        var _this = this;
+        return $http({
+          method: 'GET',
+          url: '/polls/posts/recent'
+        }).success(function(data) {
+          return $log.info("Succesfully fetched location posts.");
         }).error(function(data) {
           return $log.info("Failed to fetch posts.");
         });
