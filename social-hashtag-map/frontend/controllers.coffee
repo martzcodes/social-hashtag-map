@@ -49,7 +49,7 @@ controllers.controller('postListController', ($scope, $interval, Posts, MemberSt
         # console.log(posts.all)
         $scope.tweets = posts.tweets.reverse()
         #$scope.instas = posts.instas.reverse()
-        Posts.getTweets (posts) ->
+        Posts.getInstas (posts) ->
           #$scope.posts = posts.all.reverse()
           # console.log(posts.all)
           #$scope.tweets = posts.tweets.reverse()
