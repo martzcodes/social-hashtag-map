@@ -22,6 +22,22 @@ class PostListRecent(generics.ListAPIView):
         permissions.AllowAny
     ]
 
+class PostListTweet(generics.ListAPIView):
+    #queryset = Post.objects.all()
+    queryset = Post.objects.exclude(content__exact='').filter(api_type='TW').order_by('-id')[:10]
+    serializer_class = PostSerializer
+    permission_classes = [
+        permissions.AllowAny
+    ]
+
+class PostListInsta(generics.ListAPIView):
+    #queryset = Post.objects.all()
+    queryset = Post.objects.exclude(content__exact='').filter(api_type='IN').order_by('-id')[:10]
+    serializer_class = PostSerializer
+    permission_classes = [
+        permissions.AllowAny
+    ]
+
 class PostListLocation(generics.ListAPIView):
     #queryset = Post.objects.all()
     queryset = Post.objects.exclude(content__exact='').filter(known_user=True).filter(has_location=True)

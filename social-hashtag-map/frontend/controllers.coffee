@@ -44,18 +44,24 @@ controllers.controller('postListController', ($scope, $interval, Posts, MemberSt
   fetchPosts = ->
     Posts.getLocation (location_posts) ->
       $scope.location_posts = location_posts.reverse()
-    Posts.getRecent (posts) ->
-      $scope.posts = posts.all.reverse()
-      # console.log(posts.all)
-      $scope.tweets = posts.tweets.reverse()
-      $scope.instas = posts.instas.reverse()
-      ###
-      MemberStats.fetch ->
-        $scope.memberstats = MemberStats.all()
-        $scope.teamstats = MemberStats.teams()
-      HashtagStats.fetch ->
-        $scope.hashtagstats = HashtagStats.counts()
-      ###
+      Posts.getTweets (posts) ->
+        #$scope.posts = posts.all.reverse()
+        # console.log(posts.all)
+        $scope.tweets = posts.tweets.reverse()
+        #$scope.instas = posts.instas.reverse()
+        Posts.getTweets (posts) ->
+          #$scope.posts = posts.all.reverse()
+          # console.log(posts.all)
+          #$scope.tweets = posts.tweets.reverse()
+          $scope.instas = posts.instas.reverse()
+          $scope.posts = Posts.all().reverse()
+        ###
+        MemberStats.fetch ->
+          $scope.memberstats = MemberStats.all()
+          $scope.teamstats = MemberStats.teams()
+        HashtagStats.fetch ->
+          $scope.hashtagstats = HashtagStats.counts()
+        ###
 
   checkPosts = ->
     Posts.getRecent (posts) ->

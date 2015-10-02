@@ -206,6 +206,24 @@ services.factory('Posts', ($log, $http, Post) ->
             .error (data) =>
                 $log.info("Failed to fetch posts.")
 
+    getTweets: (callback) ->
+        @clearNew()
+        $http({method: 'GET', url: '/polls/posts/tweets'})
+            .success (data) =>
+                $log.info("Succesfully fetched tweets posts.")
+                @processRecent(data.reverse(),callback)
+            .error (data) =>
+                $log.info("Failed to fetch posts.")
+
+    getInstas: (callback) ->
+        @clearNew()
+        $http({method: 'GET', url: '/polls/posts/instas'})
+            .success (data) =>
+                $log.info("Succesfully fetched instas posts.")
+                @processRecent(data.reverse(),callback)
+            .error (data) =>
+                $log.info("Failed to fetch posts.")
+
     getLocation: (callback) ->
         @clearNew()
         $http({method: 'GET', url: '/polls/posts/location'})
