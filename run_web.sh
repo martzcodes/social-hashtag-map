@@ -1,5 +1,5 @@
 #!/bin/sh
- 
+
 cd social-hashtag-map
 # migrate db, so we have the latest db schema
 #su -m myuser -c "python manage.py migrate"

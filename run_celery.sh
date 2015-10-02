@@ -4,9 +4,4 @@ export DJANGO_PROJECT_DIR=/app/social-hashtag-map
 cd social-hashtag-map
 # run Celery worker for our project social-hashtag-map with Celery configuration stored in Celeryconf
 #su -m myuser -c "celery -A config worker -B"
-groupadd celery
-usermod -a -G celery myuser
-usermod -a -G celery root
-chown -R www-data:celery /app
-ls -l
-su -m myuser -c "celery -A config worker -B -s celerybeat-schedule"
+celery -A config worker -B
