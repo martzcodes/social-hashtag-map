@@ -44,11 +44,10 @@ controllers.controller('postListController', ($scope, $interval, Posts, MemberSt
   fetchPosts = ->
     Posts.getLocation (location_posts) ->
       $scope.location_posts = location_posts.reverse()
-      Posts.getTweets (posts) ->
-        $scope.tweets = posts.tweets.reverse()
-        Posts.getInstas (instas) ->
-          $scope.instas = instas.instas.reverse()
-          $scope.posts = Posts.all().reverse()
+      Posts.getTweets (tweets) ->
+        $scope.tweets = tweets.tweets.reverse()
+      Posts.getInstas (instas) ->
+        $scope.instas = instas.instas.reverse()
         ###
         MemberStats.fetch ->
           $scope.memberstats = MemberStats.all()
