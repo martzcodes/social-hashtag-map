@@ -24,7 +24,7 @@ class PostListRecent(generics.ListAPIView):
 
 class PostListTweet(generics.ListAPIView):
     #queryset = Post.objects.all()
-    queryset = Post.objects.exclude(content__exact='').filter(api_type='TW').order_by('-id')[:10]
+    queryset = Post.objects.exclude(content__exact='').filter(source_type='TW').order_by('-id')[:10]
     serializer_class = PostSerializer
     permission_classes = [
         permissions.AllowAny
@@ -32,7 +32,7 @@ class PostListTweet(generics.ListAPIView):
 
 class PostListInsta(generics.ListAPIView):
     #queryset = Post.objects.all()
-    queryset = Post.objects.exclude(content__exact='').filter(api_type='IN').order_by('-id')[:10]
+    queryset = Post.objects.exclude(content__exact='').filter(source_type='IN').order_by('-id')[:10]
     serializer_class = PostSerializer
     permission_classes = [
         permissions.AllowAny
